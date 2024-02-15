@@ -23,7 +23,7 @@ func Base() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html data-theme=\"dark\"><head><meta charset=\"utf-8\"><title>Golang fun</title><link rel=\"stylesheet\" href=\"/css/tailwind.css\"></head><body><div class=\"navbar bg-base-100\"><div class=\"flex-1\"><a class=\"btn btn-ghost text-xl\">Golang Fun</a></div><div class=\"flex-none\"><ul class=\"menu menu-horizontal px-1\"><li><a>Link</a></li><li><details><summary>Parent</summary><ul class=\"p-2 bg-base-100 rounded-t-none\"><li><a>Link 1</a></li><li><a>Link 2</a></li></ul></details></li></ul></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html data-theme=\"dark\"><head><meta charset=\"utf-8\"><title>Golang fun</title><link rel=\"stylesheet\" href=\"/css/tailwind.css\"><script src=\"https://kit.fontawesome.com/8a37954e59.js\" crossorigin=\"anonymous\"></script></head><body><div class=\"navbar bg-base-100\"><div class=\"flex-1\"><a class=\"btn btn-ghost text-xl\">Golang Fun</a></div><div class=\"flex-none\"><ul class=\"menu menu-horizontal px-1\"><li><a>Link</a></li><li><details><summary>Parent</summary><ul class=\"p-2 bg-base-100 rounded-t-none\"><li><a>Link 1</a></li><li><a>Link 2</a></li></ul></details></li></ul></div></div><div class=\"container mx-auto px-6 mt-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -31,7 +31,7 @@ func Base() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

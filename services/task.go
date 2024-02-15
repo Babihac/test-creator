@@ -22,10 +22,9 @@ func NewTask(Log *zerolog.Logger) *TaskService {
 
 func (ts *TaskService) Get(ctx echo.Context) ([]Task, error) {
 	defaultTasks := make([]Task, 0)
-
 	defaultTasks = append(defaultTasks, Task{
 		Id:   1,
-		Name: "First Tasker",
+		Name: "First Taskerr",
 	})
 	defaultTasks = append(defaultTasks, Task{
 		Id:   2,

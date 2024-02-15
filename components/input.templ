@@ -1,0 +1,24 @@
+package components
+
+type InputProps struct {
+	Name        string
+	Value       string
+	InputType   string
+	Placeholder string
+	Err         bool
+	Classes     string
+}
+
+templ Input(props InputProps) {
+	<input
+		name={ props.Name }
+		type={ props.InputType }
+		placeholder={ props.Placeholder }
+		value={ props.Value }
+		if props.Err {
+			class={ props.Classes + " input-error" }
+		} else {
+			class={ props.Classes }
+		}
+	/>
+}

@@ -1,0 +1,13 @@
+package components
+
+import "echo-test/db"
+import "echo-test/components/layouts"
+
+templ Author(author db.Author) {
+	@layouts.Base() {
+		<div class="prose">
+			<h1>{ author.Name }</h1>
+			<div>{ author.Bio.String }</div>
+		</div>
+	}
+}

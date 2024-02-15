@@ -1,11 +1,18 @@
 package main
 
 import (
+	"context"
+	"echo-test/db"
 	router "echo-test/route"
 	"echo-test/services"
+	"echo-test/store"
+	customValidator "echo-test/validator"
+	"fmt"
 	"log"
 	"os"
 
+	"github.com/go-playground/validator"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/rs/zerolog"
@@ -13,6 +20,17 @@ import (
 
 func main() {
 	e := echo.New()
+
+	dbpool, err := pgxpool.New(context.Background(), "postgres://postgres:golang_fun@localhost:5432/fun")
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database :( ): %v\n", err)
+		os.Exit(1)
+	}
+
+	defer dbpool.Close()
+
+	queries := db.New(dbpool)
 
 	file, err := os.OpenFile("logs.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
@@ -22,9 +40,16 @@ func main() {
 
 	logger := zerolog.New(file)
 
+	authorStore := store.NewAuthorStore(queries)
+
 	taskService := services.NewTask(&logger)
+	authorService := services.NewAuthorService(&logger, authorStore)
 
 	e.Static("/", "assets")
+
+	e.Validator = &customValidator.CustomValidator{
+		Validator: validator.New(),
+	}
 
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogURI:    true,
@@ -39,7 +64,7 @@ func main() {
 		},
 	}))
 
-	router.Init(e, &logger, taskService)
+	router.Init(e, &logger, taskService, authorService)
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
