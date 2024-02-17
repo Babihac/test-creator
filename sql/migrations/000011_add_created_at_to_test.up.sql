@@ -1,0 +1,1 @@
+ALTER TABLE public.test ADD created_at timestamp NOT NULL;

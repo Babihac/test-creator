@@ -1,0 +1,21 @@
+package testComponents
+
+import "echo-test/components"
+import "echo-test/context"
+
+templ CreateTestStepOne() {
+	<div class="grid grid-cols-2 lg:grid-cols-5 gap-5 w-full">
+		<div class="col-span-2">
+			@components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "Enter test name", ID: "test-name-input", Required: true})
+		</div>
+		<div class="col-span-3">
+			@components.RangeInput(components.RangeInputProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes"})
+		</div>
+		<div class="col-span-2">
+			@components.SelectInput(components.SelectInputProps{Name: "test-type", Label: "Test type", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS})
+		</div>
+	</div>
+	<div class="ml-auto mt-auto mb-4">
+		<button type="button" class="btn btn-primary self-end" type="submit">Next Step</button>
+	</div>
+}

@@ -8,9 +8,9 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func Init(e *echo.Echo, logger *zerolog.Logger, taskService services.ITaskService, authorService services.IAuthorService) {
-	taskHandler := handlers.NewTask(logger, taskService)
+func Init(e *echo.Echo, logger *zerolog.Logger, authorService services.IAuthorService, testService services.ITestService, userService services.IUserService) {
 	authorHandler := handlers.NewAuthor(logger, authorService)
-	taskHandler.Serve(e)
+	testHandler := handlers.NewTestHandler(logger, testService, userService)
 	authorHandler.Serve(e)
+	testHandler.Serve(e)
 }

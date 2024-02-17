@@ -1,0 +1,42 @@
+package components
+
+import "fmt"
+import "echo-test/context"
+
+type SelectValues struct {
+	Value string
+	Label any
+}
+
+type SelectInputProps struct {
+	Name        string
+	Label       string
+	Values      []SelectValues
+	Value       string
+	Description string
+	ContextKey  contextValues.ContextKey
+	ID          string
+}
+
+func (s *SelectInputProps) getSuggestions(ctx context.Context) []SelectValues {
+	if s.ContextKey != "" {
+		if suggestion, ok := ctx.Value(s.ContextKey).([]SelectValues); ok {
+			return suggestion
+		}
+	}
+	return s.Values
+}
+
+templ SelectInput(props SelectInputProps) {
+	<label id={ props.ID } class="form-control w-full max-w-xs">
+		<div class="label">
+			<span class="label-text">{ props.Description }</span>
+		</div>
+		<select name={ props.Name } class="select select-bordered">
+			<option disabled>Select Teacher</option>
+			for _, value := range props.getSuggestions(ctx) {
+				<option value={ value.Value }>{ fmt.Sprintf("%v", value.Label) }</option>
+			}
+		</select>
+	</label>
+}

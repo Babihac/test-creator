@@ -1,0 +1,20 @@
+package testComponents
+
+type StepperProps struct {
+	CurrentStep int
+	Steps       []string
+}
+
+templ Stepper(props StepperProps) {
+	<ul class="steps steps-vertical max-h-[800px]">
+		for i, step := range props.Steps {
+			if props.CurrentStep == i + 1 {
+				<li class="step step-primary">{ step }</li>
+			} else if props.CurrentStep < i + 1 {
+				<li class="step">{ step }</li>
+			} else {
+				<li data-content="✓" class="step step-success">{ step }</li>
+			}
+		}
+	</ul>
+}

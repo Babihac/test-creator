@@ -1,0 +1,37 @@
+package components
+
+import "fmt"
+
+type TextInputProps struct {
+	Placeholder string
+	Value       string
+	Error       string
+	Name        string
+	Label       string
+	Legend      string
+	classes     string
+	ID          string
+	Required    bool
+}
+
+templ TextInput(props TextInputProps) {
+	<label class="form-control w-full max-w-xs" id={ props.ID }>
+		<div class="label">
+			<span class="label-text">{ props.Label }</span>
+			if props.Error != "" {
+				<span class="label-text-alt">Top Right label</span>
+			}
+		</div>
+		<div class="flex input input-bordered items-center gap-2">
+			<input name={ props.Name } type="text" placeholder={ props.Placeholder } class={ fmt.Sprintf("grow bg-transparent %s", props.classes) }/>
+			if props.Required {
+				<span class="badge badge-warning">Required</span>
+			}
+		</div>
+		<div class="label">
+			if props.Legend != "" {
+				<span class="label-text-alt">Bottom Left label</span>
+			}
+		</div>
+	</label>
+}

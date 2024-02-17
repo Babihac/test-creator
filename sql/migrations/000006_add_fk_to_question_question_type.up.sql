@@ -1,0 +1,1 @@
+ALTER TABLE public.question ADD CONSTRAINT question_question_type_fk FOREIGN KEY (question_type) REFERENCES public.question_type(id) ON DELETE CASCADE;

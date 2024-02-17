@@ -1,0 +1,27 @@
+package components
+
+import "fmt"
+
+var classes = "alert-success alert-error alert-warning alert-info"
+
+templ Notification(positionX string, positionY string, color string, content string) {
+	<div hx-swap-oob="true" id="notification">
+		<script>
+    setTimeout(() => {
+      console.log('remove');
+      document.querySelector('.notification-toast').remove();
+    }, 3000);
+
+    document.querySelector('.remove-notification').addEventListener('click', (event) => {
+      console.log(event.target.parentElement.parentElement);
+      event.target.parentElement.parentElement.remove();
+    });
+  </script>
+		<div class={ fmt.Sprintf(fmt.Sprintf("notification-toast z-50 toast toast-%s toast-%s", positionY, positionX)) }>
+			<div class={ fmt.Sprintf("alert %s", color) }>
+				<span>{ content }</span>
+				<i class="fa-regular fa-circle-xmark cursor-pointer remove-notification"></i>
+			</div>
+		</div>
+	</div>
+}

@@ -13,22 +13,28 @@ import (
 
 const createAuthor = `-- name: CreateAuthor :one
 INSERT INTO authors (
-  name, bio
+  name, bio, age
 ) VALUES (
-  $1, $2
+  $1, $2, $3
 )
-RETURNING id, name, bio
+RETURNING id, name, bio, age
 `
 
 type CreateAuthorParams struct {
 	Name string
 	Bio  pgtype.Text
+	Age  int32
 }
 
 func (q *Queries) CreateAuthor(ctx context.Context, arg CreateAuthorParams) (Author, error) {
-	row := q.db.QueryRow(ctx, createAuthor, arg.Name, arg.Bio)
+	row := q.db.QueryRow(ctx, createAuthor, arg.Name, arg.Bio, arg.Age)
 	var i Author
-	err := row.Scan(&i.ID, &i.Name, &i.Bio)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Bio,
+		&i.Age,
+	)
 	return i, err
 }
 
@@ -43,19 +49,24 @@ func (q *Queries) DeleteAuthor(ctx context.Context, id int64) error {
 }
 
 const getAuthor = `-- name: GetAuthor :one
-SELECT id, name, bio FROM authors
+SELECT id, name, bio, age FROM authors
 WHERE id = $1 LIMIT 1
 `
 
 func (q *Queries) GetAuthor(ctx context.Context, id int64) (Author, error) {
 	row := q.db.QueryRow(ctx, getAuthor, id)
 	var i Author
-	err := row.Scan(&i.ID, &i.Name, &i.Bio)
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Bio,
+		&i.Age,
+	)
 	return i, err
 }
 
 const listAuthors = `-- name: ListAuthors :many
-SELECT id, name, bio FROM authors
+SELECT id, name, bio, age FROM authors
 ORDER BY name
 `
 
@@ -68,7 +79,12 @@ func (q *Queries) ListAuthors(ctx context.Context) ([]Author, error) {
 	var items []Author
 	for rows.Next() {
 		var i Author
-		if err := rows.Scan(&i.ID, &i.Name, &i.Bio); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Bio,
+			&i.Age,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -82,7 +98,8 @@ func (q *Queries) ListAuthors(ctx context.Context) ([]Author, error) {
 const updateAuthor = `-- name: UpdateAuthor :exec
 UPDATE authors
   set name = $2,
-  bio = $3
+  bio = $3,
+  age = $4
 WHERE id = $1
 `
 
@@ -90,9 +107,15 @@ type UpdateAuthorParams struct {
 	ID   int64
 	Name string
 	Bio  pgtype.Text
+	Age  int32
 }
 
 func (q *Queries) UpdateAuthor(ctx context.Context, arg UpdateAuthorParams) error {
-	_, err := q.db.Exec(ctx, updateAuthor, arg.ID, arg.Name, arg.Bio)
+	_, err := q.db.Exec(ctx, updateAuthor,
+		arg.ID,
+		arg.Name,
+		arg.Bio,
+		arg.Age,
+	)
 	return err
 }

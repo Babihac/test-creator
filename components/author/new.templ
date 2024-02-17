@@ -1,4 +1,4 @@
-package components
+package authorComponents
 
 import "echo-test/components/layouts"
 import "echo-test/components"
@@ -27,6 +27,9 @@ templ NewAuthor(name string, bio string, errors map[string]string) {
 				<label class="form-control">
 					<div class="label">
 						<span class="label-text">Your bio</span>
+						if _, ok := errors["bio"]; ok {
+							<span class="label-text-alt text-red-500">{ errors["bio"] }</span>
+						}
 					</div>
 					<textarea name="bio" class="textarea textarea-bordered h-24" placeholder="Bio">
 						{ bio }

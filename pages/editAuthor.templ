@@ -1,0 +1,10 @@
+package pages
+
+import "echo-test/components/layouts"
+import "echo-test/components/author"
+
+templ EditAuthorPage(name string, bio string, id int64, errors map[string]string) {
+	@layouts.Base() {
+		@authorComponents.EditAuthor(name, bio, id, errors)
+	}
+}

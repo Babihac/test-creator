@@ -1,0 +1,40 @@
+package authorComponents
+
+import "echo-test/components"
+import "fmt"
+
+templ EditAuthor(name string, bio string, id int64, errors map[string]string) {
+	<div class="mx-auto p-6 prose bg-base-300 rounded-md w-full" id="edit-author">
+		<h1>Edit Author { fmt.Sprint(id) }</h1>
+		<form hx-patch={ fmt.Sprintf("/author/%d", id) } class="flex flex-col gap-3" hx-target="#edit-author" hx-swap="outerHTML">
+			<label class="form-control w-full max-w-xs">
+				<div class="label">
+					<span class="label-text">Name</span>
+					if _, ok := errors["name"]; ok {
+						<span class="label-text-alt text-red-500">{ errors["name"] }</span>
+					}
+				</div>
+				@components.Input(components.InputProps{
+					Name:        "name",
+					InputType:   "text",
+					Placeholder: "Author's name",
+					Classes:     "input input-bordered w-full max-w-xs",
+					Value:       name,
+					Err:         errors["name"] != "",
+				})
+			</label>
+			<label class="form-control">
+				<div class="label">
+					<span class="label-text">Your bio</span>
+					if _, ok := errors["bio"]; ok {
+						<span class="label-text-alt text-red-500">{ errors["bio"] }</span>
+					}
+				</div>
+				<textarea name="bio" class="textarea textarea-bordered h-24" placeholder="Bio">
+					{ bio }
+				</textarea>
+			</label>
+			<button class="btn btn-primary ml-auto mt-3">Submit</button>
+		</form>
+	</div>
+}

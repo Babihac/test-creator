@@ -1,0 +1,1 @@
+ALTER TABLE public.question DROP CONSTRAINT question_question_type_fk;

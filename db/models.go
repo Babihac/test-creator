@@ -8,8 +8,45 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Answer struct {
+	ID         pgtype.UUID
+	Value      string
+	QuestionID pgtype.UUID
+	Correct    bool
+}
+
 type Author struct {
 	ID   int64
 	Name string
 	Bio  pgtype.Text
+	Age  int32
+}
+
+type Question struct {
+	ID           pgtype.UUID
+	QuestionType pgtype.UUID
+	Points       int32
+	Name         string
+}
+
+type QuestionType struct {
+	ID   pgtype.UUID
+	Type string
+}
+
+type Test struct {
+	ID        pgtype.UUID
+	Name      string
+	TeacherID pgtype.UUID
+	Duration  pgtype.Interval
+	MaxPoints int32
+	Date      pgtype.Timestamp
+	CreatedAt pgtype.Timestamp
+}
+
+type User struct {
+	ID        pgtype.UUID
+	FirstName string
+	LastName  string
+	Email     string
 }

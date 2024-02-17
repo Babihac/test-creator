@@ -1,0 +1,26 @@
+package testComponents
+
+templ CreateTest() {
+	<div class="flex gap-3 flex-col h-full">
+		<div class="prose mb-6">
+			<h1 class="text-primary">Create new test</h1>
+		</div>
+		<div class="flex flex-1 mb-7 form-shadow px-4 rounded-lg">
+			@Stepper(StepperProps{
+				Steps:       []string{"Main info", "Scoring requirements", "Questin definition", "Summary"},
+				CurrentStep: 3,
+			})
+			<div class="divider divider-horizontal"></div>
+			<div
+				x-data="{
+					name: '',
+				}"
+				class="flex-1"
+			>
+				<form action="" class="flex flex-col justify-between flex-1 h-full">
+					@CreateTestStepOne()
+				</form>
+			</div>
+		</div>
+	</div>
+}

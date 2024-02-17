@@ -1,0 +1,10 @@
+package authorComponents
+
+import "echo-test/db"
+
+templ Author(author db.Author) {
+	<div class="prose">
+		<h1>{ author.Name }</h1>
+		<div>{ author.Bio.String }</div>
+	</div>
+}

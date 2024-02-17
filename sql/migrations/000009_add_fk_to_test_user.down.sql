@@ -1,0 +1,1 @@
+ALTER TABLE public.test RENAME COLUMN teacher_id TO author_id;

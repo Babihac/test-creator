@@ -1,0 +1,15 @@
+package testPages
+
+import "echo-test/components/layouts"
+import "echo-test/components/test"
+import "echo-test/db"
+
+type CreateTestProps struct {
+	userSuggestions []db.GetUserSuggestionsRow
+}
+
+templ CreateTestPage() {
+	@layouts.Base() {
+		@testComponents.CreateTest()
+	}
+}
