@@ -27,7 +27,7 @@ func Notification(positionX string, positionY string, color string, content stri
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-swap-oob=\"true\" id=\"notification\"><script>\n    setTimeout(() => {\n      console.log('remove');\n      document.querySelector('.notification-toast').remove();\n    }, 3000);\n\n    document.querySelector('.remove-notification').addEventListener('click', (event) => {\n      console.log(event.target.parentElement.parentElement);\n      event.target.parentElement.parentElement.remove();\n    });\n  </script>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-swap-oob=\"true\" id=\"notification\"><script>\n    setTimeout(() => {\n      const notification = document.querySelector('.notification-toast')\n      if (notification) {\n        notification.remove();\n      }\n    }, 3000);\n\n    document.querySelector('.remove-notification').addEventListener('click', (event) => {\n      console.log(event.target.parentElement.parentElement);\n      event.target.parentElement.parentElement.remove();\n    });\n  </script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -68,7 +68,7 @@ func Notification(positionX string, positionY string, color string, content stri
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(content)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/notification.templ`, Line: 21, Col: 19}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/notification.templ`, Line: 23, Col: 19}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {

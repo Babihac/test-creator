@@ -2917,10 +2917,6 @@ html {
   grid-column: span 3 / span 3;
 }
 
-.col-span-full {
-  grid-column: 1 / -1;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -2933,6 +2929,10 @@ html {
 
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
 }
 
 .mb-3 {
@@ -2965,18 +2965,6 @@ html {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
-.mb-\[100px\] {
-  margin-bottom: 100px;
-}
-
-.mb-10 {
-  margin-bottom: 2.5rem;
 }
 
 .flex {
@@ -3016,12 +3004,12 @@ html {
   min-height: 100vh;
 }
 
-.min-h-\[90vh\] {
-  min-height: 90vh;
-}
-
 .min-h-\[80vh\] {
   min-height: 80vh;
+}
+
+.min-h-\[90vh\] {
+  min-height: 90vh;
 }
 
 .w-full {
@@ -3052,16 +3040,8 @@ html {
   grid-auto-flow: column;
 }
 
-.grid-flow-row-dense {
-  grid-auto-flow: row dense;
-}
-
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.flex-row {
-  flex-direction: row;
 }
 
 .flex-col {
@@ -3230,9 +3210,5 @@ html {
 @media (min-width: 1024px) {
   .lg\:grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
-  .lg\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

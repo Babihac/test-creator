@@ -81,12 +81,15 @@ func (h *CreateTestHelper) PrepareStepOne(c echo.Context, errorsMap map[string]s
 	key := contextValues.USER_SUGGESTIONS
 	ctx := context.WithValue(c.Request().Context(), key, selectValues)
 
+	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-1")
+
 	testComponents.CreateTestStepOne(testComponents.CreateTestStepOneProps{Erors: errorsMap}).Render(ctx, c.Response().Writer)
 	return testComponents.Stepper(testComponents.StepperProps{CurrentStep: 1, Steps: h.steps, Oob: true}).Render(ctx, c.Response().Writer)
 
 }
 
 func (h *CreateTestHelper) HandleStepLoaded(c echo.Context, step int) error {
+	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-2")
 	return testComponents.Stepper(testComponents.StepperProps{CurrentStep: step, Steps: h.steps, Oob: true}).Render(c.Request().Context(), c.Response().Writer)
 }
 
@@ -103,6 +106,10 @@ func (h *CreateTestHelper) PrepareStepThree(c echo.Context, errorsMap map[string
 func (h *CreateTestHelper) ValidateStepOne(c echo.Context) (bool, *map[string]string, error) {
 
 	stepOneValues := &StepOneForm{}
+
+	c.Request().ParseForm()
+
+	fmt.Printf("FormXXX: %v\n", c.Request().Form)
 
 	fmt.Printf("Current step: %d\n", stepOneValues.CurrentStep)
 

@@ -23,20 +23,19 @@ templ CreateTest(props  CreateTestProps) {
 					{
 						currentStep: 1, 
 						testName: '', teacherId: '%s', 
-						testDuration: '60', maxScore: '100', 
-						minRequiredScore: '60'
+						testDuration: '60', 
+						maxScore: '100', 
+						minRequiredScore: '60',
 					}
 					`), props.DefaultTeacherId) }
-					action=""
+					action="POST"
 				>
-					<input name="test-name" type="hidden" x-model="testName"/>
-					<input name="teacher-id" type="hidden" x-model="teacherId"/>
-					<input name="test-duration" type="hidden" x-model="testDuration"/>
-					<input name="max-score" type="hidden" x-model="maxScore"/>
-					<input name="min-required-score" type="hidden" x-model="minRequiredScore"/>
-					<div id="create-test-form">
+					<div x-show="currentStep === 1" id="create-test-form-step-1">
 						@CreateTestStepOne(CreateTestStepOneProps{})
 					</div>
+					<div x-show="currentStep === 2" id="create-test-form-step-2"></div>
+					<div x-show="currentStep === 3" id="create-test-form-step-3"></div>
+					<div x-show="currentStep === 4" id="create-test-form-step-4"></div>
 				</form>
 			</div>
 		</div>

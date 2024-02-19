@@ -8,8 +8,10 @@ templ Notification(positionX string, positionY string, color string, content str
 	<div hx-swap-oob="true" id="notification">
 		<script>
     setTimeout(() => {
-      console.log('remove');
-      document.querySelector('.notification-toast').remove();
+      const notification = document.querySelector('.notification-toast')
+      if (notification) {
+        notification.remove();
+      }
     }, 3000);
 
     document.querySelector('.remove-notification').addEventListener('click', (event) => {

@@ -30,7 +30,7 @@ func CreateTestStepOne(props CreateTestStepOneProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col justify-between flex-1 h-full\"><div class=\"grid grid-cols-2 lg:grid-cols-5 gap-5 w-full\"><div id=\"test-name\" class=\"col-span-2\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-init=\"currentStep = 1\" class=\"flex flex-col justify-between flex-1 h-full\"><div class=\"grid grid-cols-2 lg:grid-cols-5 gap-5 w-full\"><div id=\"test-name\" class=\"col-span-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -54,7 +54,7 @@ func CreateTestStepOne(props CreateTestStepOneProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"ml-auto mt-auto mb-4\"><button hx-post=\"/test/new/step2\" hx-push-url=\"true\" hx-target=\"#create-test-form\" type=\"button\" class=\"btn btn-primary self-end\">Next Step</button></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"ml-auto mt-auto mb-4\"><button hx-post=\"/test/new/step2\" hx-push-url=\"true\" hx-target=\"#create-test-form-step-2\" type=\"button\" class=\"btn btn-primary self-end\">Next Step</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
