@@ -1,1 +1,1 @@
-ALTER TABLE public.test DROP COLUMN created_at timestamp;
+ALTER TABLE public.test DROP COLUMN created_at;

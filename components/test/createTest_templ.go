@@ -10,7 +10,13 @@ import "context"
 import "io"
 import "bytes"
 
-func CreateTest() templ.Component {
+import "fmt"
+
+type CreateTestProps struct {
+	DefaultTeacherId string
+}
+
+func CreateTest(props CreateTestProps) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -23,26 +29,41 @@ func CreateTest() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex gap-3 flex-col h-full\"><div class=\"prose mb-6\"><h1 class=\"text-primary\">Create new test</h1></div><div class=\"flex flex-1 mb-7 form-shadow px-4 rounded-lg\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"create-test-component\" class=\"flex gap-3 flex-col min-h-[80vh]\"><div class=\"prose mb-6\"><h1 class=\"text-primary\">Create new test</h1></div><div class=\"flex flex-1 mb-7 form-shadow px-4 rounded-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = Stepper(StepperProps{
 			Steps:       []string{"Main info", "Scoring requirements", "Questin definition", "Summary"},
-			CurrentStep: 3,
+			CurrentStep: 1,
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"divider divider-horizontal\"></div><div x-data=\"{\n					name: &#39;&#39;,\n				}\" class=\"flex-1\"><form action=\"\" class=\"flex flex-col justify-between flex-1 h-full\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"divider divider-horizontal\"></div><div class=\"flex-1\"><form x-data=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = CreateTestStepOne().Render(ctx, templ_7745c5c3_Buffer)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(fmt.Sprintf((`
+					{
+						currentStep: 1, 
+						testName: '', teacherId: '%s', 
+						testDuration: '60', maxScore: '100', 
+						minRequiredScore: '60'
+					}
+					`), props.DefaultTeacherId)))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</form></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" action=\"\"><input name=\"test-name\" type=\"hidden\" x-model=\"testName\"> <input name=\"teacher-id\" type=\"hidden\" x-model=\"teacherId\"> <input name=\"test-duration\" type=\"hidden\" x-model=\"testDuration\"> <input name=\"max-score\" type=\"hidden\" x-model=\"maxScore\"> <input name=\"min-required-score\" type=\"hidden\" x-model=\"minRequiredScore\"><div id=\"create-test-form\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = CreateTestStepOne(CreateTestStepOneProps{}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

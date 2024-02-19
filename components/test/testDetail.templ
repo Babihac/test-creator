@@ -1,0 +1,12 @@
+package testComponents
+
+type TestDetailProps struct {
+	Name string
+}
+
+templ TestDetail(props TestDetailProps) {
+	<div class="prose">
+		<h1>{ props.Name }</h1>
+		<p>This will be test detail page</p>
+	</div>
+}

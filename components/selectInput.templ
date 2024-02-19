@@ -16,6 +16,7 @@ type SelectInputProps struct {
 	Description string
 	ContextKey  contextValues.ContextKey
 	ID          string
+	Model       string
 }
 
 func (s *SelectInputProps) getSuggestions(ctx context.Context) []SelectValues {
@@ -32,8 +33,17 @@ templ SelectInput(props SelectInputProps) {
 		<div class="label">
 			<span class="label-text">{ props.Description }</span>
 		</div>
-		<select name={ props.Name } class="select select-bordered">
-			<option disabled>Select Teacher</option>
+		<select
+			name={ props.Name }
+			class="select select-bordered"
+			if props.Model != "" {
+				x-model={ props.Model }
+			}
+		>
+			<option
+				selected
+				disabled
+			>Select Teacher</option>
 			for _, value := range props.getSuggestions(ctx) {
 				<option value={ value.Value }>{ fmt.Sprintf("%v", value.Label) }</option>
 			}

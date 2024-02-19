@@ -11,6 +11,23 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const getFirstUser = `-- name: GetFirstUser :one
+SELECT id, first_name, last_name, email FROM "user"
+LIMIT 1
+`
+
+func (q *Queries) GetFirstUser(ctx context.Context) (User, error) {
+	row := q.db.QueryRow(ctx, getFirstUser)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+	)
+	return i, err
+}
+
 const getUser = `-- name: GetUser :one
 SELECT id, first_name, last_name, email FROM "user"
 WHERE email = $1 LIMIT 1

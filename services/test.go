@@ -3,6 +3,7 @@ package services
 import (
 	"echo-test/db"
 
+	"github.com/jackc/pgx/v5/pgtype"
 	echo "github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
 )
@@ -13,8 +14,8 @@ type TestService struct {
 }
 
 // Create implements ITestService.
-func (*TestService) Create(ctx echo.Context, params db.CreateTestParams) (db.Author, error) {
-	panic("unimplemented")
+func (t *TestService) Create(ctx echo.Context, params db.CreateTestParams) (db.Test, error) {
+	return t.queries.CreateTest(ctx.Request().Context(), params)
 }
 
 // Delete implements ITestService.
@@ -28,8 +29,8 @@ func (t *TestService) Get(ctx echo.Context) ([]db.ListTestsWithTeacherRow, error
 }
 
 // GetOne implements ITestService.
-func (*TestService) GetOne(id int64, ctx echo.Context) (db.Test, error) {
-	panic("unimplemented")
+func (t *TestService) GetOne(ctx echo.Context, id pgtype.UUID) (db.Test, error) {
+	return t.queries.GetTest(ctx.Request().Context(), id)
 }
 
 // Update implements ITestService.

@@ -8,8 +8,8 @@ type CreateTestProps struct {
 	userSuggestions []db.GetUserSuggestionsRow
 }
 
-templ CreateTestPage() {
+templ CreateTestPage(props  testComponents.CreateTestProps) {
 	@layouts.Base() {
-		@testComponents.CreateTest()
+		@testComponents.CreateTest(props)
 	}
 }

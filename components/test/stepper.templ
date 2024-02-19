@@ -3,10 +3,17 @@ package testComponents
 type StepperProps struct {
 	CurrentStep int
 	Steps       []string
+	Oob         bool
 }
 
 templ Stepper(props StepperProps) {
-	<ul class="steps steps-vertical max-h-[800px]">
+	<ul
+		id="create-form-stepper"
+		class="steps steps-vertical max-h-[800px]"
+		if props.Oob {
+			hx-swap-oob="true"
+		}
+	>
 		for i, step := range props.Steps {
 			if props.CurrentStep == i + 1 {
 				<li class="step step-primary">{ step }</li>

@@ -10,15 +10,10 @@ import "context"
 import "io"
 import "bytes"
 
-import "echo-test/components/layouts"
 import "echo-test/components/test"
-import "echo-test/db"
+import "echo-test/components/layouts"
 
-type CreateTestProps struct {
-	userSuggestions []db.GetUserSuggestionsRow
-}
-
-func CreateTestPage(props testComponents.CreateTestProps) templ.Component {
+func TestDetailPage(props testComponents.TestDetailProps) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -37,7 +32,9 @@ func CreateTestPage(props testComponents.CreateTestProps) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			templ_7745c5c3_Err = testComponents.CreateTest(props).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = testComponents.TestDetail(testComponents.TestDetailProps{
+				Name: props.Name,
+			}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

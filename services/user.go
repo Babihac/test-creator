@@ -13,7 +13,7 @@ type UserService struct {
 }
 
 // Create implements IUserService.
-func (*UserService) Create(ctx echo.Context, params db.CreateTestParams) (db.Author, error) {
+func (*UserService) Create(ctx echo.Context, params db.CreateTestParams) (db.User, error) {
 	panic("unimplemented")
 }
 

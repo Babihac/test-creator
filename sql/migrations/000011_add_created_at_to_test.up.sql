@@ -1,1 +1,1 @@
-ALTER TABLE public.test ADD created_at timestamp NOT NULL;
+ALTER TABLE public.test ADD created_at timestamp NOT NULL DEFAULT now();

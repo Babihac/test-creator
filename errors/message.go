@@ -1,12 +1,13 @@
 package errors
 
 import (
+	"echo-test/types"
 	"fmt"
 
 	"github.com/go-playground/validator"
 )
 
-func Message(err validator.FieldError) string {
+func Message(err validator.FieldError, step types.IStep) string {
 	switch err.Tag() {
 	case "required":
 		return "Please, fill in this field"
@@ -14,8 +15,10 @@ func Message(err validator.FieldError) string {
 		return lenError(err)
 	case "min":
 		return minError(err)
+	case "ltefield":
+		return step.LteFieldError(err.Field())
 	default:
-		return ""
+		return fmt.Sprintf("This field must be valid %s", err.Tag())
 	}
 }
 

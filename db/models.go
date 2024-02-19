@@ -40,7 +40,6 @@ type Test struct {
 	TeacherID pgtype.UUID
 	Duration  pgtype.Interval
 	MaxPoints int32
-	Date      pgtype.Timestamp
 	CreatedAt pgtype.Timestamp
 }
 

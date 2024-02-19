@@ -23,10 +23,20 @@ type CreateAuthorBody struct {
 	Bio  string `form:"bio" validate:"min=5"`
 }
 
+// LteFieldError implements types.IStep.
+func (*CreateAuthorBody) LteFieldError(fieldName string) string {
+	panic("unimplemented")
+}
+
 type UpdateAuthorBody struct {
 	Name string `form:"name" validate:"required"`
 	Bio  string `form:"bio" validate:"min=5"`
 	ID   int64  `param:"id" validate:"required"`
+}
+
+// LteFieldError implements types.IStep.
+func (*UpdateAuthorBody) LteFieldError(fieldName string) string {
+	panic("unimplemented")
 }
 
 type AuthorHandler struct {
@@ -125,7 +135,7 @@ func (a *AuthorHandler) createAuthor(c echo.Context) error {
 	if err := c.Validate(body); err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
 			fmt.Println(err.Tag(), err.Param())
-			errorsMap[strings.ToLower(err.Field())] = errors.Message(err)
+			errorsMap[strings.ToLower(err.Field())] = errors.Message(err, body)
 		}
 		c.Response().Status = http.StatusBadRequest
 		return authorComponents.NewAuthor(body.Name, body.Bio, errorsMap).Render(c.Request().Context(), c.Response().Writer)
@@ -158,7 +168,7 @@ func (a *AuthorHandler) editAuthor(c echo.Context) error {
 	if err := c.Validate(body); err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
 			fmt.Println(err.Tag(), err.Param(), err.Field())
-			errorsMap[strings.ToLower(err.Field())] = errors.Message(err)
+			errorsMap[strings.ToLower(err.Field())] = errors.Message(err, body)
 		}
 		return authorComponents.EditAuthor(body.Name, body.Bio, body.ID, errorsMap).Render(c.Request().Context(), c.Response().Writer)
 	}

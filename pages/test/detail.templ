@@ -1,0 +1,12 @@
+package testPages
+
+import "echo-test/components/test"
+import "echo-test/components/layouts"
+
+templ TestDetailPage(props testComponents.TestDetailProps) {
+	@layouts.Base() {
+		@testComponents.TestDetail(testComponents.TestDetailProps{
+			Name: props.Name,
+		})
+	}
+}

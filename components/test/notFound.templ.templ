@@ -1,0 +1,16 @@
+package testComponents
+
+import "echo-test/components/layouts"
+
+type NotFoundProps struct {
+	Id string
+}
+
+templ NotFound(props NotFoundProps) {
+	@layouts.Base() {
+		<div class="prose">
+			<h1>Test Not found</h1>
+			<p>Test with this id does not exist</p>
+		</div>
+	}
+}

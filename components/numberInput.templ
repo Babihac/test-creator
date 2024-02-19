@@ -2,7 +2,7 @@ package components
 
 import "fmt"
 
-type TextInputProps struct {
+type NumberInputProps struct {
 	Placeholder string
 	Value       string
 	Error       string
@@ -12,11 +12,12 @@ type TextInputProps struct {
 	classes     string
 	ID          string
 	Required    bool
+	Min         string
+	Max         string
 	Model       string
-	OOB         bool
 }
 
-templ TextInput(props TextInputProps) {
+templ NumberInput(props NumberInputProps) {
 	<label class="form-control w-full max-w-xs" id={ props.ID }>
 		<div class="label">
 			<span class="label-text">{ props.Label }</span>
@@ -27,9 +28,15 @@ templ TextInput(props TextInputProps) {
 		<div class="flex input input-bordered items-center">
 			<input
 				name={ props.Name }
-				type="text"
+				type="number"
 				placeholder={ props.Placeholder }
 				class={ fmt.Sprintf("grow bg-transparent %s", props.classes) }
+				if props.Min != "" {
+					min={ props.Min }
+				}
+				if props.Max != "" {
+					max={ props.Max }
+				}
 				if props.Model != "" {
 					x-model={ props.Model }
 				}
@@ -40,7 +47,7 @@ templ TextInput(props TextInputProps) {
 		</div>
 		<div class="label">
 			if props.Legend != "" {
-				<span class="label-text-alt">{ props.Legend }</span>
+				<span class="label-text-alt">Bottom Left label</span>
 			}
 		</div>
 	</label>

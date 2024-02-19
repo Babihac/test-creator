@@ -12,7 +12,7 @@ import (
 )
 
 const createTest = `-- name: CreateTest :one
-INSERT INTO test (name, teacher_id, duration, max_points, date) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, teacher_id, duration, max_points, date, created_at
+INSERT INTO test (name, teacher_id, duration, max_points) VALUES ($1, $2, $3, $4) RETURNING id, name, teacher_id, duration, max_points, created_at
 `
 
 type CreateTestParams struct {
@@ -20,7 +20,6 @@ type CreateTestParams struct {
 	TeacherID pgtype.UUID
 	Duration  pgtype.Interval
 	MaxPoints int32
-	Date      pgtype.Timestamp
 }
 
 func (q *Queries) CreateTest(ctx context.Context, arg CreateTestParams) (Test, error) {
@@ -29,7 +28,6 @@ func (q *Queries) CreateTest(ctx context.Context, arg CreateTestParams) (Test, e
 		arg.TeacherID,
 		arg.Duration,
 		arg.MaxPoints,
-		arg.Date,
 	)
 	var i Test
 	err := row.Scan(
@@ -38,7 +36,6 @@ func (q *Queries) CreateTest(ctx context.Context, arg CreateTestParams) (Test, e
 		&i.TeacherID,
 		&i.Duration,
 		&i.MaxPoints,
-		&i.Date,
 		&i.CreatedAt,
 	)
 	return i, err
@@ -54,7 +51,7 @@ func (q *Queries) DeleteTest(ctx context.Context, id pgtype.UUID) error {
 }
 
 const getTest = `-- name: GetTest :one
-SELECT id, name, teacher_id, duration, max_points, date, created_at FROM test
+SELECT id, name, teacher_id, duration, max_points, created_at FROM test
 where id = $1 LIMIT 1
 `
 
@@ -67,14 +64,13 @@ func (q *Queries) GetTest(ctx context.Context, id pgtype.UUID) (Test, error) {
 		&i.TeacherID,
 		&i.Duration,
 		&i.MaxPoints,
-		&i.Date,
 		&i.CreatedAt,
 	)
 	return i, err
 }
 
 const listTests = `-- name: ListTests :many
-SELECT id, name, teacher_id, duration, max_points, date, created_at FROM test
+SELECT id, name, teacher_id, duration, max_points, created_at FROM test
 `
 
 func (q *Queries) ListTests(ctx context.Context) ([]Test, error) {
@@ -92,7 +88,6 @@ func (q *Queries) ListTests(ctx context.Context) ([]Test, error) {
 			&i.TeacherID,
 			&i.Duration,
 			&i.MaxPoints,
-			&i.Date,
 			&i.CreatedAt,
 		); err != nil {
 			return nil, err
@@ -106,7 +101,7 @@ func (q *Queries) ListTests(ctx context.Context) ([]Test, error) {
 }
 
 const listTestsWithTeacher = `-- name: ListTestsWithTeacher :many
-SELECT t.id, t.name, t.teacher_id, t.duration, t.max_points, t.date, CONCAT(u.first_name, ' ', u.last_name) as teacher_name, t.created_at
+SELECT t.id, t.name, t.teacher_id, t.duration, t.max_points, CONCAT(u.first_name, ' ', u.last_name) as teacher_name, t.created_at
 FROM "test" t
 JOIN "user" u ON t.teacher_id = u.id
 `
@@ -117,7 +112,6 @@ type ListTestsWithTeacherRow struct {
 	TeacherID   pgtype.UUID
 	Duration    pgtype.Interval
 	MaxPoints   int32
-	Date        pgtype.Timestamp
 	TeacherName interface{}
 	CreatedAt   pgtype.Timestamp
 }
@@ -138,7 +132,6 @@ func (q *Queries) ListTestsWithTeacher(ctx context.Context) ([]ListTestsWithTeac
 			&i.TeacherID,
 			&i.Duration,
 			&i.MaxPoints,
-			&i.Date,
 			&i.TeacherName,
 			&i.CreatedAt,
 		); err != nil {
@@ -153,7 +146,7 @@ func (q *Queries) ListTestsWithTeacher(ctx context.Context) ([]ListTestsWithTeac
 }
 
 const updateTest = `-- name: UpdateTest :one
-UPDATE test SET name = $1, teacher_id = $2, duration = $3, max_points = $4, date = $5 WHERE id = $6 RETURNING id, name, teacher_id, duration, max_points, date, created_at
+UPDATE test SET name = $1, teacher_id = $2, duration = $3, max_points = $4 WHERE id = $5 RETURNING id, name, teacher_id, duration, max_points, created_at
 `
 
 type UpdateTestParams struct {
@@ -161,7 +154,6 @@ type UpdateTestParams struct {
 	TeacherID pgtype.UUID
 	Duration  pgtype.Interval
 	MaxPoints int32
-	Date      pgtype.Timestamp
 	ID        pgtype.UUID
 }
 
@@ -171,7 +163,6 @@ func (q *Queries) UpdateTest(ctx context.Context, arg UpdateTestParams) (Test, e
 		arg.TeacherID,
 		arg.Duration,
 		arg.MaxPoints,
-		arg.Date,
 		arg.ID,
 	)
 	var i Test
@@ -181,7 +172,6 @@ func (q *Queries) UpdateTest(ctx context.Context, arg UpdateTestParams) (Test, e
 		&i.TeacherID,
 		&i.Duration,
 		&i.MaxPoints,
-		&i.Date,
 		&i.CreatedAt,
 	)
 	return i, err

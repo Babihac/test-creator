@@ -3,19 +3,29 @@ package testComponents
 import "echo-test/components"
 import "echo-test/context"
 
-templ CreateTestStepOne() {
-	<div class="grid grid-cols-2 lg:grid-cols-5 gap-5 w-full">
-		<div class="col-span-2">
-			@components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "Enter test name", ID: "test-name-input", Required: true})
+type CreateTestStepOneProps struct {
+	Erors map[string]string
+}
+
+templ CreateTestStepOne(props CreateTestStepOneProps) {
+	<div
+		class="flex flex-col justify-between flex-1 h-full"
+	>
+		<div
+			class="grid grid-cols-2 lg:grid-cols-5 gap-5 w-full"
+		>
+			<div id="test-name" class="col-span-2">
+				@components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "Enter test name", ID: "test-name-input", Required: true, Model: "testName", Error: props.Erors["TestName"]})
+			</div>
+			<div id="test-duration" class="col-span-3">
+				@components.RangeInput(components.RangeInputProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes", Model: "testDuration"})
+			</div>
+			<div id="teacher-name" class="col-span-2">
+				@components.SelectInput(components.SelectInputProps{Name: "teacher-id", Label: "Test type", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS, Model: "teacherId"})
+			</div>
 		</div>
-		<div class="col-span-3">
-			@components.RangeInput(components.RangeInputProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes"})
+		<div class="ml-auto mt-auto mb-4">
+			<button hx-post="/test/new/step2" hx-push-url="true" hx-target="#create-test-form" type="button" class="btn btn-primary self-end">Next Step</button>
 		</div>
-		<div class="col-span-2">
-			@components.SelectInput(components.SelectInputProps{Name: "test-type", Label: "Test type", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS})
-		</div>
-	</div>
-	<div class="ml-auto mt-auto mb-4">
-		<button type="button" class="btn btn-primary self-end" type="submit">Next Step</button>
 	</div>
 }

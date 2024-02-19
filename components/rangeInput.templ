@@ -15,6 +15,7 @@ type RangeInputProps struct {
 	Label     string
 	ID        string
 	Unit      string
+	Model     string
 }
 
 func (p *RangeInputProps) generateSteps() []string {
@@ -41,17 +42,29 @@ func (p *RangeInputProps) get(v any) string {
 }
 
 templ RangeInput(p RangeInputProps) {
-	<div x-data={ fmt.Sprintf("{duration:%d}", p.Value) } id={ p.ID }>
+	<div id={ p.ID }>
 		<label class="label mb-1">
 			<div>
 				{ p.Label }
-				<span>[</span>
-				<span x-text="duration"></span>
-				<span>{ p.Unit }</span>
-				<span>]</span>
+				if p.Model != "" {
+					<span>[</span>
+					<span x-text={ p.Model }></span>
+					<span>{ p.Unit }</span>
+					<span>]</span>
+				}
 			</div>
 		</label>
-		<input type="range" min={ p.get(p.Min) } max={ p.get(p.Max) } x-model="duration" class="range" step={ p.get(p.Step) }/>
+		<input
+			name={ p.Name }
+			type="range"
+			min={ p.get(p.Min) }
+			max={ p.get(p.Max) }
+			class="range"
+			step={ p.get(p.Step) }
+			if p.Model != "" {
+				x-model={ p.Model }
+			}
+		/>
 		<div class="w-full flex justify-between text-xs px-2 mt-1">
 			for _, step := range p.generateSteps() {
 				<label>{ step }</label>
