@@ -158,6 +158,7 @@ func (t *TestHandler) createTestStepOne(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/test/new")
 	}
 
+	c.Response().Header().Add("HX-Push-Url", "/test/new/step1")
 	return t.createTestHelper.PrepareStepOne(c, map[string]string{})
 }
 
@@ -177,6 +178,7 @@ func (t *TestHandler) createTestStepTwo(c echo.Context) error {
 		return t.createTestHelper.PrepareStepOne(c, *errorsMap)
 	}
 
+	c.Response().Header().Add("HX-Push-Url", "/test/new/step2")
 	return t.createTestHelper.PrepareStepTwo(c, map[string]string{})
 }
 

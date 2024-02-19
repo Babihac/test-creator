@@ -29,9 +29,9 @@ func (s *SelectInputProps) getSuggestions(ctx context.Context) []SelectValues {
 }
 
 templ SelectInput(props SelectInputProps) {
-	<label id={ props.ID } class="form-control w-full max-w-xs">
+	<label id={ props.ID } class="form-control w-full max-w-sm">
 		<div class="label">
-			<span class="label-text">{ props.Description }</span>
+			<span class="label-text font-bold">{ props.Label }</span>
 		</div>
 		<select
 			name={ props.Name }

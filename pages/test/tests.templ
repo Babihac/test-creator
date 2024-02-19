@@ -8,7 +8,7 @@ import "echo-test/helpers"
 templ TestsPage(tests []db.ListTestsWithTeacherRow ) {
 	@layouts.Base() {
 		<div class="mb-3 flex gap-2 items-baseline justify-between w-full">
-			<div x-on:click="alert('Hello World!')" class="prose"><h1>Tests</h1></div>
+			<div class="prose"><h1>Tests</h1></div>
 			<a href="/test/new" class="btn btn-primary btn-sm ml-auto">Create new test</a>
 		</div>
 		<div class="overflow-x-auto">

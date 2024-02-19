@@ -31,3 +31,9 @@ type IUserService interface {
 	Update(ctx echo.Context, params db.UpdateTestParams) error
 	GetUserSuggestions(ctx echo.Context) ([]db.GetUserSuggestionsRow, error)
 }
+
+type IQuestionService interface {
+	Get(ctx echo.Context) ([]db.Question, error)
+	GetQuestionTypesSuggestions(ctx echo.Context) ([]db.GetQuestionTypeSuggestionsRow, error)
+	//GetOne(ctx echo.Context, id pgtype.UUID) (db.Question, error)
+}

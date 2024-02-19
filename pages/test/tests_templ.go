@@ -34,7 +34,7 @@ func TestsPage(tests []db.ListTestsWithTeacherRow) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mb-3 flex gap-2 items-baseline justify-between w-full\"><div x-on:click=\"alert(&#39;Hello World!&#39;)\" class=\"prose\"><h1>Tests</h1></div><a href=\"/test/new\" class=\"btn btn-primary btn-sm ml-auto\">Create new test</a></div><div class=\"overflow-x-auto\"><table class=\"table table-zebra\"><thead><tr><th>Name</th><th>Teacher</th><th>Created At</th><th>Max points</th><th></th></tr></thead> <tbody>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"mb-3 flex gap-2 items-baseline justify-between w-full\"><div class=\"prose\"><h1>Tests</h1></div><a href=\"/test/new\" class=\"btn btn-primary btn-sm ml-auto\">Create new test</a></div><div class=\"overflow-x-auto\"><table class=\"table table-zebra\"><thead><tr><th>Name</th><th>Teacher</th><th>Created At</th><th>Max points</th><th></th></tr></thead> <tbody>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

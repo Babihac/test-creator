@@ -45,6 +45,7 @@ func main() {
 	authorService := services.NewAuthorService(&logger, authorStore)
 	testService := services.NewTestService(&logger, queries)
 	userService := services.NewUserService(&logger, queries)
+	questionService := services.NewQuestionService(&logger, queries)
 
 	e.Static("/", "assets")
 
@@ -65,7 +66,7 @@ func main() {
 		},
 	}))
 
-	router.Init(e, &logger, authorService, testService, userService)
+	router.Init(e, &logger, authorService, testService, userService, questionService)
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

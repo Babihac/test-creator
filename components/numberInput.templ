@@ -18,9 +18,9 @@ type NumberInputProps struct {
 }
 
 templ NumberInput(props NumberInputProps) {
-	<label class="form-control w-full max-w-xs" id={ props.ID }>
+	<label class="form-control w-full max-w-sm" id={ props.ID }>
 		<div class="label">
-			<span class="label-text">{ props.Label }</span>
+			<span class="label-text font-bold">{ props.Label }</span>
 			if props.Error != "" {
 				<span class="label-text-alt text-red-500">{ props.Error }</span>
 			}

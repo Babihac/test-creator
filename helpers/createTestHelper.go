@@ -89,11 +89,11 @@ func (h *CreateTestHelper) PrepareStepOne(c echo.Context, errorsMap map[string]s
 }
 
 func (h *CreateTestHelper) HandleStepLoaded(c echo.Context, step int) error {
-	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-2")
 	return testComponents.Stepper(testComponents.StepperProps{CurrentStep: step, Steps: h.steps, Oob: true}).Render(c.Request().Context(), c.Response().Writer)
 }
 
 func (h *CreateTestHelper) PrepareStepTwo(c echo.Context, errorsMap map[string]string) error {
+	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-2")
 	testComponents.CreateTestStepScore(testComponents.CreateTestStepScoreProps{Erors: errorsMap}).Render(c.Request().Context(), c.Response().Writer)
 	testComponents.Stepper(testComponents.StepperProps{CurrentStep: 2, Steps: h.steps, Oob: true}).Render(c.Request().Context(), c.Response().Writer)
 	return nil
@@ -108,10 +108,6 @@ func (h *CreateTestHelper) ValidateStepOne(c echo.Context) (bool, *map[string]st
 	stepOneValues := &StepOneForm{}
 
 	c.Request().ParseForm()
-
-	fmt.Printf("FormXXX: %v\n", c.Request().Form)
-
-	fmt.Printf("Current step: %d\n", stepOneValues.CurrentStep)
 
 	return h.validateStep(c, stepOneValues)
 }

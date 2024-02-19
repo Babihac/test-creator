@@ -1,0 +1,15 @@
+package questionPages
+
+import "echo-test/components/layouts"
+import "echo-test/components/question"
+import "echo-test/db"
+
+type CreateQuestionPageProps struct {
+	QuestionTypes []db.GetQuestionTypeSuggestionsRow
+}
+
+templ CreateQuestionPage(props CreateQuestionPageProps) {
+	@layouts.Base() {
+		@questionComponents.CreateQuestion(questionComponents.CreateQuestionProps{QuestionTypes: props.QuestionTypes})
+	}
+}

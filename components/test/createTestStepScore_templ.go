@@ -45,7 +45,7 @@ func CreateTestStepScore(props CreateTestStepScoreProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\" mt-auto mb-4 flex justify-between\"><button hx-post=\"/test/new/step1\" hx-target=\"#create-test-form-step-1\" hx-push-url=\"true\" type=\"button\" class=\"btn btn-primary self-end\">Previous Step</button> <button hx-post=\"/test/new/step3\" hx-target=\"#create-test-form-step-3\" hx-push-url=\"true\" type=\"button\" class=\"btn btn-primary self-end\">Next Step</button> <button hx-post=\"/test/new\" hx-target=\"#create-test-component\" type=\"submit\" class=\"btn btn-primary self-end\">Test submit</button></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\" mt-auto mb-4 flex justify-between\"><button hx-post=\"/test/new/step1\" hx-target=\"#create-test-form-step-1\" type=\"button\" class=\"btn btn-primary self-end\">Previous Step</button> <button hx-post=\"/test/new/step3\" hx-target=\"#create-test-form-step-3\" type=\"button\" class=\"btn btn-primary self-end\">Next Step</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

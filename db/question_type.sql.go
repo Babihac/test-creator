@@ -43,6 +43,35 @@ func (q *Queries) GetQuestionType(ctx context.Context, id pgtype.UUID) (Question
 	return i, err
 }
 
+const getQuestionTypeSuggestions = `-- name: GetQuestionTypeSuggestions :many
+SELECT id::text as value, type as label FROM question_type
+`
+
+type GetQuestionTypeSuggestionsRow struct {
+	Value string
+	Label string
+}
+
+func (q *Queries) GetQuestionTypeSuggestions(ctx context.Context) ([]GetQuestionTypeSuggestionsRow, error) {
+	rows, err := q.db.Query(ctx, getQuestionTypeSuggestions)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetQuestionTypeSuggestionsRow
+	for rows.Next() {
+		var i GetQuestionTypeSuggestionsRow
+		if err := rows.Scan(&i.Value, &i.Label); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listQuestionTypes = `-- name: ListQuestionTypes :many
 SELECT id, type FROM question_type
 `

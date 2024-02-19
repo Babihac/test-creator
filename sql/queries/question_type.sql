@@ -2,6 +2,9 @@
 SELECT * FROM question_type
 where id = $1 LIMIT 1;
 
+-- name: GetQuestionTypeSuggestions :many
+SELECT id::text as value, type as label FROM question_type;
+
 -- name: ListQuestionTypes :many
 SELECT * FROM question_type;
 
