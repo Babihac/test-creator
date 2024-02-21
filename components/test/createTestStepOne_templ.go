@@ -50,7 +50,7 @@ func CreateTestStepOne(props CreateTestStepOneProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.SelectInput(components.SelectInputProps{Name: "teacher-id", Label: "Test type", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS, Model: "teacherId"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.SelectInput(components.SelectInputProps{Name: "teacher-id", Label: "Supervising teacher", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS, Model: "teacherId"}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

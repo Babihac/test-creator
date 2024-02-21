@@ -1,0 +1,39 @@
+package questionComponents
+
+import "echo-test/components"
+
+type FormBodyProps struct {
+	QuestionTypes []components.SelectValues
+	Errors        map[string]string
+}
+
+templ FormBody(props FormBodyProps) {
+	<div id="new-question" class="flex flex-col gap-3">
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mt-6">
+			<div class="col-span-1">
+				@components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", Model: "questionName", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]})
+			</div>
+			<div class="col-span-1">
+				@components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", Model: "questionType", ID: "question-type-input", Values: props.QuestionTypes})
+			</div>
+			<div class="col-span-1">
+				@components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", Model: "questionPoints", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]})
+			</div>
+			<div class="col-span-1 lg:col-span-3">
+				@components.TextArea(components.TextAreaProps{Name: "question-text", Placeholder: "Formulate your question.", Label: "Question text", Model: "questionText", ID: "question-text-input", Required: true, Error: props.Errors["QuestionText"]})
+			</div>
+		</div>
+		<div class="divider w-full"></div>
+		<div class="prose flex align-baseline gap-3">
+			<h2>Answers Definition</h2>
+			<button @click="addAnswer" class="btn btn-outline btn-sm btn-success" type="button">New</button>
+		</div>
+		<template id="answers-definition-list" x-for="(answer, index) in answers" :key="answer.id">
+			@AnswerDefinitionRow()
+		</template>
+		<div class="divider w-full"></div>
+		<div class="ml-auto">
+			<button hx-post="/question" hx-target="#new-question" hx-swap="outerHTML" hx-target class="btn btn-primary">Create Question</button>
+		</div>
+	</div>
+}

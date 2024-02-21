@@ -6,7 +6,7 @@ WHERE email = $1 LIMIT 1;
 SELECT * FROM "user";
 
 -- name: GetUserSuggestions :many
-SELECT id as "value", concat(first_name, ' ', last_name) as "label" FROM "user";
+SELECT id::text as "value", concat(first_name, ' ', last_name) as "label" FROM "user";
 
 -- name: GetFirstUser :one
 SELECT * FROM "user"

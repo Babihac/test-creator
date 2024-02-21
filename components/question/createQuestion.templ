@@ -1,10 +1,10 @@
 package questionComponents
 
 import "echo-test/components"
-import "echo-test/db"
 
 type CreateQuestionProps struct {
-	QuestionTypes []db.GetQuestionTypeSuggestionsRow
+	QuestionTypes []components.SelectValues
+	Errors        map[string]string
 }
 
 templ CreateQuestion(props CreateQuestionProps) {
@@ -13,18 +13,31 @@ templ CreateQuestion(props CreateQuestionProps) {
 			<h1 class="text-primary">Create new question</h1>
 		</div>
 		<div class="flex flex-1 mb-7 form-shadow px-4 rounded-lg">
-			<form class="flex-1">
-				<div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-					<div class="col-span-1">
-						@components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", Model: "questionName", ID: "question-name-input", Required: true})
-					</div>
-					<div class="col-span-1">
-						@components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", Model: "questionType", ID: "question-type-input"})
-					</div>
-					<div class="col-span-1">
-						@components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", Model: "questionPoints", ID: "question-points-input", Required: true, Min: "0"})
-					</div>
-				</div>
+			<form
+				id="create-question-form"
+				x-data="{
+					questionName: '',
+					questionType: '',
+					questionPoints: '',
+					questionText: '',
+					answers: [],
+					addAnswer() {
+						this.answers.push({
+							id: this.uniqueId(),
+							answerText: '',
+							isCorrect: false,
+						});
+					},
+					removeAnswer(index) {
+						this.answers.splice(index, 1);
+					},
+					uniqueId: function() {
+						return Math.random().toString(36).substr(2, 9);
+					},
+				}"
+				class="flex-1"
+			>
+				@FormBody(FormBodyProps{QuestionTypes: props.QuestionTypes, Errors: props.Errors})
 			</form>
 		</div>
 	</div>

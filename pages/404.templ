@@ -1,0 +1,16 @@
+package pages
+
+import "echo-test/components/layouts"
+
+type NotFoundProps struct {
+	Message string
+}
+
+templ NotFound(props NotFoundProps) {
+	@layouts.Base() {
+		<div class="prose">
+			<h1>{ props.Message }</h1>
+			<p>Try go back</p>
+		</div>
+	}
+}

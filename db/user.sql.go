@@ -7,8 +7,6 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const getFirstUser = `-- name: GetFirstUser :one
@@ -46,11 +44,11 @@ func (q *Queries) GetUser(ctx context.Context, email string) (User, error) {
 }
 
 const getUserSuggestions = `-- name: GetUserSuggestions :many
-SELECT id as "value", concat(first_name, ' ', last_name) as "label" FROM "user"
+SELECT id::text as "value", concat(first_name, ' ', last_name) as "label" FROM "user"
 `
 
 type GetUserSuggestionsRow struct {
-	Value pgtype.UUID
+	Value string
 	Label interface{}
 }
 

@@ -11,7 +11,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 )
 
@@ -67,14 +66,10 @@ func (h *CreateTestHelper) PrepareStepOne(c echo.Context, errorsMap map[string]s
 	}
 
 	for _, useruserSuggestion := range userSuggestions {
-		uuid, err := ParseUUID(useruserSuggestion.Value)
 
-		if err != nil {
-			return echo.NewHTTPError(http.StatusInternalServerError, "Error parsing UUID value")
-		}
 		selectValues = append(selectValues, components.SelectValues{
 			Label: useruserSuggestion.Label,
-			Value: uuid,
+			Value: useruserSuggestion.Value,
 		})
 	}
 
@@ -125,15 +120,10 @@ func (h *CreateTestHelper) validateStep(c echo.Context, step types.IStep) (bool,
 		return false, nil, err
 	}
 
-	fmt.Printf("Form values: %v\n", step)
-
 	errorsMap := make(map[string]string, 0)
 
 	if err := c.Validate(step); err != nil {
-		for _, err := range err.(validator.ValidationErrors) {
-			fmt.Printf("%v\n", err.Tag())
-			errorsMap[err.Field()] = errors.Message(err, step)
-		}
+		errors.PopulateErrorMap(&errorsMap, err, step)
 	}
 
 	if len(errorsMap) != 0 {

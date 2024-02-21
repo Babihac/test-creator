@@ -1,0 +1,1 @@
+ALTER TABLE public.question ADD question_text text NOT NULL;

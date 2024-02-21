@@ -11,7 +11,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -22,7 +22,6 @@ func main() {
 	e := echo.New()
 
 	dbpool, err := pgxpool.New(context.Background(), "postgres://postgres:golang_fun@localhost:5432/fun")
-
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database :( ): %v\n", err)
 		os.Exit(1)
@@ -46,6 +45,7 @@ func main() {
 	testService := services.NewTestService(&logger, queries)
 	userService := services.NewUserService(&logger, queries)
 	questionService := services.NewQuestionService(&logger, queries)
+	answerService := services.NewAnswerService(&logger, queries)
 
 	e.Static("/", "assets")
 
@@ -66,7 +66,7 @@ func main() {
 		},
 	}))
 
-	router.Init(e, &logger, authorService, testService, userService, questionService)
+	router.Init(e, &logger, authorService, testService, userService, questionService, answerService, dbpool)
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

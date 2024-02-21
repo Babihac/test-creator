@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-playground/validator"
+	"github.com/go-playground/validator/v10"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"

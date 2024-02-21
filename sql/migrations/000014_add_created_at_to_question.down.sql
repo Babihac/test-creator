@@ -1,0 +1,1 @@
+ALTER TABLE public.question DROP COLUMN IF EXISTS created_at;

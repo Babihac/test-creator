@@ -12,6 +12,7 @@ module.exports = {
       backgroundImage: (theme) => ({
         sun: "url('/icons/sun.svg')",
         moon: "url('/icons/moon.svg')",
+        delete: "url('/icons/delete.svg')",
       }),
     },
   },

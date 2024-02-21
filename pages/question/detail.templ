@@ -1,0 +1,15 @@
+package questionPages
+
+import "echo-test/db"
+import "echo-test/components/layouts"
+import "echo-test/components/question"
+
+type QuestionPageProps struct {
+	Question db.Question
+}
+
+templ QuestionDetail(props QuestionPageProps) {
+	@layouts.Base() {
+		@questionComponents.QuestionDetail(questionComponents.QuestioNDetailProps{Question: props.Question})
+	}
+}

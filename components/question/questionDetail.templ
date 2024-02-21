@@ -1,0 +1,14 @@
+package questionComponents
+
+import "echo-test/db"
+
+type QuestioNDetailProps struct {
+	Question db.Question
+}
+
+templ QuestionDetail(props QuestioNDetailProps) {
+	<div class="prose">
+		<h1>{ props.Question.Name }</h1>
+		<p>{ props.Question.QuestionText }</p>
+	</div>
+}

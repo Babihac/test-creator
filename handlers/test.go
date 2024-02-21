@@ -96,15 +96,10 @@ func (t *TestHandler) new(c echo.Context) error {
 	}
 
 	for _, useruserSuggestion := range userSuggestions {
-		uuid, err := helpers.ParseUUID(useruserSuggestion.Value)
-
-		if err != nil {
-			return echo.NewHTTPError(http.StatusInternalServerError, "Error parsing UUID value")
-		}
 
 		selectValues = append(selectValues, components.SelectValues{
 			Label: useruserSuggestion.Label,
-			Value: uuid,
+			Value: useruserSuggestion.Value,
 		})
 	}
 
@@ -170,8 +165,7 @@ func (t *TestHandler) createTestStepTwo(c echo.Context) error {
 	ok, errorsMap, err := t.createTestHelper.ValidateStepOne(c)
 
 	if err != nil {
-		c.Response().Header().Add("HX-Reswap", "none")
-		return components.Notification("end", "top", "alert-error", "Something went wrong").Render(c.Request().Context(), c.Response().Writer)
+		return helpers.SendServerErrorNotification(c)
 	}
 
 	if !ok {
@@ -190,8 +184,7 @@ func (t *TestHandler) createTestStepThree(c echo.Context) error {
 	ok, errorsMap, err := t.createTestHelper.ValidateStepTwo(c)
 
 	if err != nil {
-		c.Response().Header().Add("HX-Reswap", "none")
-		return components.Notification("end", "top", "alert-error", "Something went wrong").Render(c.Request().Context(), c.Response().Writer)
+		return helpers.SendServerErrorNotification(c)
 	}
 
 	if !ok {

@@ -13,26 +13,34 @@ import (
 
 const createQuestion = `-- name: CreateQuestion :one
 INSERT INTO question (
-  question_type, points, name
+  question_type, points, name, question_text
 ) VALUES ( 
-  $1, $2, $3
-) RETURNING id, question_type, points, name
+  $1, $2, $3,$4
+) RETURNING id, question_type, points, name, question_text, created_at
 `
 
 type CreateQuestionParams struct {
 	QuestionType pgtype.UUID
 	Points       int32
 	Name         string
+	QuestionText string
 }
 
 func (q *Queries) CreateQuestion(ctx context.Context, arg CreateQuestionParams) (Question, error) {
-	row := q.db.QueryRow(ctx, createQuestion, arg.QuestionType, arg.Points, arg.Name)
+	row := q.db.QueryRow(ctx, createQuestion,
+		arg.QuestionType,
+		arg.Points,
+		arg.Name,
+		arg.QuestionText,
+	)
 	var i Question
 	err := row.Scan(
 		&i.ID,
 		&i.QuestionType,
 		&i.Points,
 		&i.Name,
+		&i.QuestionText,
+		&i.CreatedAt,
 	)
 	return i, err
 }
@@ -48,7 +56,7 @@ func (q *Queries) DeleteQuestion(ctx context.Context, id pgtype.UUID) error {
 }
 
 const getQuestion = `-- name: GetQuestion :one
-SELECT id, question_type, points, name FROM question 
+SELECT id, question_type, points, name, question_text, created_at FROM question 
 WHERE id = $1 LIMIT 1
 `
 
@@ -60,12 +68,14 @@ func (q *Queries) GetQuestion(ctx context.Context, id pgtype.UUID) (Question, er
 		&i.QuestionType,
 		&i.Points,
 		&i.Name,
+		&i.QuestionText,
+		&i.CreatedAt,
 	)
 	return i, err
 }
 
 const listQuestions = `-- name: ListQuestions :many
-SELECT id, question_type, points, name FROM question
+SELECT id, question_type, points, name, question_text, created_at FROM question
 `
 
 func (q *Queries) ListQuestions(ctx context.Context) ([]Question, error) {
@@ -82,6 +92,8 @@ func (q *Queries) ListQuestions(ctx context.Context) ([]Question, error) {
 			&i.QuestionType,
 			&i.Points,
 			&i.Name,
+			&i.QuestionText,
+			&i.CreatedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -94,7 +106,7 @@ func (q *Queries) ListQuestions(ctx context.Context) ([]Question, error) {
 }
 
 const listQuestionsByQuestionType = `-- name: ListQuestionsByQuestionType :many
-SELECT id, question_type, points, name FROM question 
+SELECT id, question_type, points, name, question_text, created_at FROM question 
 WHERE question_type = $1
 `
 
@@ -112,6 +124,8 @@ func (q *Queries) ListQuestionsByQuestionType(ctx context.Context, questionType 
 			&i.QuestionType,
 			&i.Points,
 			&i.Name,
+			&i.QuestionText,
+			&i.CreatedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -127,7 +141,7 @@ const updateQuestion = `-- name: UpdateQuestion :one
 UPDATE question SET 
   question_type = $1, points = $2, name = $3
 WHERE id = $4
-RETURNING id, question_type, points, name
+RETURNING id, question_type, points, name, question_text, created_at
 `
 
 type UpdateQuestionParams struct {
@@ -150,6 +164,8 @@ func (q *Queries) UpdateQuestion(ctx context.Context, arg UpdateQuestionParams) 
 		&i.QuestionType,
 		&i.Points,
 		&i.Name,
+		&i.QuestionText,
+		&i.CreatedAt,
 	)
 	return i, err
 }

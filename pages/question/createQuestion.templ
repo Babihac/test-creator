@@ -2,10 +2,10 @@ package questionPages
 
 import "echo-test/components/layouts"
 import "echo-test/components/question"
-import "echo-test/db"
+import "echo-test/components"
 
 type CreateQuestionPageProps struct {
-	QuestionTypes []db.GetQuestionTypeSuggestionsRow
+	QuestionTypes []components.SelectValues
 }
 
 templ CreateQuestionPage(props CreateQuestionPageProps) {

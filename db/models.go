@@ -27,6 +27,8 @@ type Question struct {
 	QuestionType pgtype.UUID
 	Points       int32
 	Name         string
+	QuestionText string
+	CreatedAt    pgtype.Timestamptz
 }
 
 type QuestionType struct {

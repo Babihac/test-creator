@@ -1,0 +1,44 @@
+package questionComponents
+
+import "echo-test/components"
+
+type AnswerDefinitionRowProps struct {
+	AnswerText string
+	IsCorrect  bool
+}
+
+templ AnswerDefinitionRow() {
+	<div class="flex items-center gap-4">
+		<div class="lg:min-w-[350px]">
+			<label class="form-control w-full max-w-sm">
+				<div class="label">
+					<span class="label-text font-bold">Answer</span>
+					<span x-show="answer.answerText===''" class="label-text-alt text-red-500">Please, fill in this field</span>
+				</div>
+				<div class="flex input input-bordered items-center">
+					<input
+						name="answer[text]"
+						type="text"
+						placeholder="Enter answer"
+						class="grow bg-transparent %s"
+						x-model="answer.answerText"
+					/>
+					<span class="badge badge-warning">Required</span>
+				</div>
+				<div class="label"></div>
+			</label>
+		</div>
+		<div class="pt-5 flex items-center">
+			@components.Toggle(
+				components.ToggleProps{
+					Label: "Correct answer",
+					Name:  "answer[correct]",
+					Model: "answer.isCorrect",
+				})
+			<div
+				@click="removeAnswer(index)"
+				class="btn btn-circle btn-error bg-delete bg-no-repeat bg-center btn-xs"
+			></div>
+		</div>
+	</div>
+}

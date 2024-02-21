@@ -1,0 +1,44 @@
+package components
+
+type TextAreaProps struct {
+	Placeholder string
+	Value       string
+	Error       string
+	Name        string
+	Label       string
+	Legend      string
+	classes     string
+	ID          string
+	Required    bool
+	Model       string
+	OOB         bool
+}
+
+templ TextArea(props TextAreaProps) {
+	<label class="form-control" id={ props.ID }>
+		<div class="label">
+			<span class="label-text font-bold">{ props.Label }</span>
+			if props.Required {
+				<span class="badge badge-warning">Required</span>
+			}
+			if props.Error != "" {
+				<span class="label-text-alt text-red-500">{ props.Error }</span>
+			}
+		</div>
+		<textarea
+			name={ props.Name }
+			class="textarea textarea-bordered h-24"
+			placeholder={ props.Placeholder }
+			if props.Model != "" {
+				x-model.fill={ props.Model }
+			}
+		>
+			{ props.Value }
+		</textarea>
+		<div class="label">
+			if props.Legend != "" {
+				<span class="label-text-alt">Your bio</span>
+			}
+		</div>
+	</label>
+}

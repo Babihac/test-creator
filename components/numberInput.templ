@@ -29,6 +29,7 @@ templ NumberInput(props NumberInputProps) {
 			<input
 				name={ props.Name }
 				type="number"
+				value={ props.Value }
 				placeholder={ props.Placeholder }
 				class={ fmt.Sprintf("grow bg-transparent %s", props.classes) }
 				if props.Min != "" {
@@ -38,7 +39,7 @@ templ NumberInput(props NumberInputProps) {
 					max={ props.Max }
 				}
 				if props.Model != "" {
-					x-model={ props.Model }
+					x-model.fill={ props.Model }
 				}
 			/>
 			if props.Required {

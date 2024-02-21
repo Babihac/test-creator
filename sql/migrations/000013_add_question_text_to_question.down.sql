@@ -1,0 +1,1 @@
+ALTER TABLE public.question DROP question_text

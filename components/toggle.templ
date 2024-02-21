@@ -1,0 +1,28 @@
+package components
+
+import "fmt"
+
+type ToggleProps struct {
+	Label    string
+	Checked  bool
+	Disabled bool
+	Name     string
+	Model    string
+}
+
+templ Toggle(props ToggleProps) {
+	<div class="form-control w-52">
+		<label class="cursor-pointer label justify-start gap-4 font-bold">
+			<span x-text="answer.isCorrect? 'Correct answer' : 'Incorrect answer'" class="label-text">{ props.Label }</span>
+			<input name={ props.Name } type="hidden" name="answer[index]" x-model.fill="answer.isCorrect" value={ fmt.Sprintf("%t", props.Checked) }/>
+			<input
+				type="checkbox"
+				class="toggle toggle-succes checked:bg-success hover:checked:bg-success  checked:border-success bg-error border-error hover:bg-error"
+				checked={ fmt.Sprintf("%t", props.Checked) }
+				if props.Model != "" {
+					x-model.fill={ props.Model }
+				}
+			/>
+		</label>
+	</div>
+}

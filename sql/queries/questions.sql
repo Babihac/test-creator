@@ -11,9 +11,9 @@ WHERE question_type = $1;
 
 -- name: CreateQuestion :one
 INSERT INTO question (
-  question_type, points, name
+  question_type, points, name, question_text
 ) VALUES ( 
-  $1, $2, $3
+  $1, $2, $3,$4
 ) RETURNING *;
 
 -- name: UpdateQuestion :one

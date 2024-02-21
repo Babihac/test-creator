@@ -28,10 +28,11 @@ templ TextInput(props TextInputProps) {
 			<input
 				name={ props.Name }
 				type="text"
+				value={ props.Value }
 				placeholder={ props.Placeholder }
 				class={ fmt.Sprintf("grow bg-transparent %s", props.classes) }
 				if props.Model != "" {
-					x-model={ props.Model }
+					x-model.fill={ props.Model }
 				}
 			/>
 			if props.Required {
