@@ -16,7 +16,7 @@ templ CreateTestStepOne(props CreateTestStepOneProps) {
 			class="grid grid-cols-2 lg:grid-cols-5 gap-5 w-full"
 		>
 			<div id="test-name" class="col-span-2">
-				@components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "Enter test name", ID: "test-name-input", Required: true, Model: "testName", Error: props.Erors["TestName"]})
+				@components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "", ID: "test-name-input", Required: true, Model: "testName", Error: props.Erors["TestName"]})
 			</div>
 			<div id="test-duration" class="col-span-3">
 				@components.RangeInput(components.RangeInputProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes", Model: "testDuration"})
@@ -25,7 +25,7 @@ templ CreateTestStepOne(props CreateTestStepOneProps) {
 				@components.SelectInput(components.SelectInputProps{Name: "teacher-id", Label: "Supervising teacher", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS, Model: "teacherId"})
 			</div>
 		</div>
-		<div class="ml-auto mt-auto mb-4">
+		<div class="ml-auto lg:mt-auto mb-4 mt-3">
 			<button hx-post="/test/new/step2" hx-target="#create-test-form-step-2" type="button" class="btn btn-primary self-end">Next Step</button>
 		</div>
 	</div>

@@ -8,7 +8,7 @@ type AnswerDefinitionRowProps struct {
 }
 
 templ AnswerDefinitionRow() {
-	<div class="flex items-center gap-4">
+	<div class="flex items-center gap-4 flex-wrap">
 		<div class="lg:min-w-[350px]">
 			<label class="form-control w-full max-w-sm">
 				<div class="label">
@@ -40,5 +40,6 @@ templ AnswerDefinitionRow() {
 				class="btn btn-circle btn-error bg-delete bg-no-repeat bg-center btn-xs"
 			></div>
 		</div>
+		<div class="divider w-full lg:hidden"></div>
 	</div>
 }

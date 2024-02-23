@@ -29,7 +29,7 @@ func Stepper(props StepperProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<ul id=\"create-form-stepper\" class=\"steps steps-vertical max-h-[800px]\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<ul id=\"create-form-stepper\" class=\"steps lg:steps-vertical max-h-[800px] overflow-auto\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

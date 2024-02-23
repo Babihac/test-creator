@@ -11,7 +11,7 @@ templ CreateTest(props  CreateTestProps) {
 		<div class="prose mb-6">
 			<h1 class="text-primary">Create new test</h1>
 		</div>
-		<div class="flex flex-1 mb-7 form-shadow px-4 rounded-lg">
+		<div class="flex flex-1 mb-7 form-shadow px-4 rounded-lg flex-col lg:flex-row">
 			@Stepper(StepperProps{
 				Steps:       []string{"Main info", "Scoring requirements", "Questin definition", "Summary"},
 				CurrentStep: 1,

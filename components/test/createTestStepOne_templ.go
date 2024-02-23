@@ -34,7 +34,7 @@ func CreateTestStepOne(props CreateTestStepOneProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "Enter test name", ID: "test-name-input", Required: true, Model: "testName", Error: props.Erors["TestName"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "", ID: "test-name-input", Required: true, Model: "testName", Error: props.Erors["TestName"]}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -54,7 +54,7 @@ func CreateTestStepOne(props CreateTestStepOneProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"ml-auto mt-auto mb-4\"><button hx-post=\"/test/new/step2\" hx-target=\"#create-test-form-step-2\" type=\"button\" class=\"btn btn-primary self-end\">Next Step</button></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"ml-auto lg:mt-auto mb-4 mt-3\"><button hx-post=\"/test/new/step2\" hx-target=\"#create-test-form-step-2\" type=\"button\" class=\"btn btn-primary self-end\">Next Step</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -9,7 +9,7 @@ type StepperProps struct {
 templ Stepper(props StepperProps) {
 	<ul
 		id="create-form-stepper"
-		class="steps steps-vertical max-h-[800px]"
+		class="steps lg:steps-vertical max-h-[800px] overflow-auto"
 		if props.Oob {
 			hx-swap-oob="true"
 		}
