@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tailwindcss -i assets/css/styles.css -o assets/css/tailwind.css --minify",
-    "watch": "tailwindcss -i assets/css/styles.css -o assets/css/tailwind.css --watch"
+    "watch": "tailwindcss -i assets/css/styles.css -o assets/css/tailwind.css --watch",
+    "react-build": "esbuild --bundle react/index.tsx --outdir=assets/js --minify --sourcemap --global-name=bundle --watch",
+    "dev": "npm-run-all --parallel watch react-build"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +16,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
-    "daisyui": "^4.7.1"
+    "daisyui": "^4.7.1",
+    "esbuild": "0.20.1"
   }
 }

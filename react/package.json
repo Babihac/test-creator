@@ -1,0 +1,19 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "esbuild --bundle index.tsx --outdir=../assets/js --minify --sourcemap --global-name=bundle",
+    "start": "esbuild --bundle index.tsx --outdir=../assets/js --minify --sourcemap --global-name=bundle --watch=forever"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^18.2.19",
+    "esbuild": "^0.20.1",
+    "typescript": "^5.3.3"
+  }
+}

@@ -66,6 +66,10 @@ func main() {
 		},
 	}))
 
+	e.Use(middleware.SecureWithConfig(middleware.SecureConfig{
+		ContentTypeNosniff: "nosniff",
+	}))
+
 	e.Use(middleware.Gzip())
 
 	router.Init(e, &logger, authorService, testService, userService, questionService, answerService, dbpool)

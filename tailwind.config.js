@@ -6,6 +6,8 @@ module.exports = {
     "./pages/**/*.{go,html,templ}",
     "./pages/*.{html, templ, go}",
     "./handlers/*/*.{go,html,templ}",
+    "./react/*.{tsx,ts}",
+    "./react/**/*.{tsx,ts}",
   ],
   theme: {
     extend: {

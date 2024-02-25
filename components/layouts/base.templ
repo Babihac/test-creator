@@ -2,14 +2,7 @@ package layouts
 
 templ Base() {
 	<!DOCTYPE html>
-	<html
-		lang="en"
-		x-data="{
-		theme: localStorage.getItem('theme') || 'light',
-		}"
-		@set-theme="theme = theme === 'light' ? 'dark' : 'light'; localStorage.setItem('theme', theme);"
-		x-bind:data-theme="theme"
-	>
+	<html lang="en">
 		<head>
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -17,10 +10,13 @@ templ Base() {
 			<title>Golang fun</title>
 			<link rel="stylesheet" href="/css/tailwind.css"/>
 			<script defer src="https://kit.fontawesome.com/8a37954e59.js" crossorigin="anonymous"></script>
-			<script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
+			<script defer src="/js/htmx.js">
+			</script>
 			<script defer defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		</head>
 		<body class="flex flex-col min-h-[100vh] min-w-[100vw]" hx-boost="true">
+			<div id="react-header"></div>
+			<div id="react-content"></div>
 			<div class="hidden" id="notification"></div>
 			<div class="navbar bg-base-100">
 				<div class="navbar-start">
@@ -30,14 +26,7 @@ templ Base() {
 						</div>
 						<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
 							<li>
-								<button
-									aria-label="Toggle theme"
-									name="toggle-theme"
-									@click="$dispatch('set-theme')"
-									x-bind:data-theme="$root.dataset.theme"
-									x-bind:class="{'bg-sun': theme === 'light', 'bg-moon': theme === 'dark'}"
-									class="size-[24px] bg-transparent w-full h-full bg-no-repeat bg-center btn-ghost btn btn-sm"
-								></button>
+								<span id="react-toggle-theme-mobile"></span>
 							</li>
 							<li><a href="/author">Authors</a></li>
 							<li><a href="/test">Tests</a></li>
@@ -52,13 +41,7 @@ templ Base() {
 						<li><a href="/test" class="btn btn-ghost text-xl">Tests</a></li>
 						<li><a href="/question" class="btn btn-ghost text-xl">Questions</a></li>
 					</ul>
-					<button
-						aria-label="Toggle theme"
-						@click="$dispatch('set-theme')"
-						x-bind:data-theme="$root.dataset.theme"
-						x-bind:class="{'bg-sun': theme === 'light', 'bg-moon': theme === 'dark'}"
-						class="size-[24px] bg-transparent bg-no-repeat bg-center btn-ghost btn btn-sm mr-6"
-					></button>
+					<div class="h-[32px]" id="react-toggle-theme"></div>
 				</div>
 				<div class="navbar-end"></div>
 			</div>
@@ -89,6 +72,7 @@ templ Base() {
 					</div>
 				</nav>
 			</footer>
+			<script src="/js/index.js"></script>
 		</body>
 	</html>
 }
