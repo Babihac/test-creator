@@ -1,46 +1,11 @@
 package testPages
 
 import "echo-test/db"
-import "fmt"
 import "echo-test/components/layouts"
-import "echo-test/helpers"
+import "echo-test/components/test"
 
 templ TestsPage(tests []db.ListTestsWithTeacherRow ) {
 	@layouts.Base() {
-		<div class="mb-3 flex gap-2 items-baseline justify-between w-full">
-			<div class="prose"><h1>Tests</h1></div>
-			<a href="/test/new" class="btn btn-primary btn-sm ml-auto">Create new test</a>
-		</div>
-		<div class="overflow-x-auto">
-			<table class="table table-zebra">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Teacher</th>
-						<th>Created At</th>
-						<th>Max points</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					for _, test := range tests {
-						<tr>
-							<td>{ test.Name }</td>
-							<td>{ fmt.Sprint(test.TeacherName ) }</td>
-							<td>{ test.CreatedAt.Time.Format("2. 1. 2006") }</td>
-							<td>{ fmt.Sprint(test.MaxPoints) }</td>
-							<th>
-								<a
-									class="btn btn-ghost btn-xs"
-									if uuid, err := helpers.ParseUUID(test.ID); err == nil {
-										href={ templ.SafeURL(fmt.Sprintf("/test/%s", uuid)) }
-									}
-								>Detail</a>
-							</th>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
+		@testComponents.Tests(tests)
 	}
 }

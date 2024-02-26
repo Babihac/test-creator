@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-export const Header: React.FC = () => <h1>React component Headerrrrr</h1>;
-
 export const ToggleTheme: React.FC = () => {
   const [theme, setTheme] = useState("");
+  const [count, setCount] = useState(0);
 
   const toggleTheme = () => {
+    setCount((prev) => prev + 1);
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
@@ -20,12 +20,15 @@ export const ToggleTheme: React.FC = () => {
   }, []);
 
   return (
-    <button
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-      className={`size-[24px] bg-transparent bg-no-repeat bg-center btn-ghost btn btn-sm mr-6 ${
-        theme === "light" ? "bg-sun" : "bg-moon"
-      }`}
-    ></button>
+    <>
+      <button
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+        className={`size-[24px] bg-transparent bg-no-repeat bg-center btn-ghost btn btn-sm mr-6 ${
+          theme === "light" ? "bg-sun" : "bg-moon"
+        }`}
+      ></button>
+      <button> {count}</button>
+    </>
   );
 };

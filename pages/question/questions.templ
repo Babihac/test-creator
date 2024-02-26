@@ -2,6 +2,7 @@ package questionPages
 
 import "echo-test/components/layouts"
 import "echo-test/db"
+import "echo-test/components/question"
 
 type QuestionsPageProps struct {
 	Questions []db.Question
@@ -9,11 +10,6 @@ type QuestionsPageProps struct {
 
 templ QuestionsPage(props QuestionsPageProps) {
 	@layouts.Base() {
-		<div class="mb-3 flex gap-2 items-baseline justify-between w-full">
-			<div class="prose">
-				<h1>This will be questions page</h1>
-			</div>
-			<a href="/question/new" class="btn btn-primary btn-sm ml-auto">Create new question</a>
-		</div>
+		@questionComponents.Questions()
 	}
 }

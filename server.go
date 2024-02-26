@@ -53,7 +53,7 @@ func main() {
 		return func(c echo.Context) error {
 			r := regexp.MustCompile(`^/(js|css|icons)/*`)
 			if r.MatchString(c.Request().URL.Path) {
-				c.Response().Header().Set("Cache-Control", "public, max-age=86400") // 86400 seconds = 1 day
+				//c.Response().Header().Set("Cache-Control", "public, max-age=86400") // 86400 seconds = 1 day
 			}
 			return next(c)
 		}

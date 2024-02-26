@@ -8,6 +8,7 @@ import (
 	"echo-test/pages"
 	questionPages "echo-test/pages/question"
 	"echo-test/services"
+	"echo-test/utils"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -53,18 +54,26 @@ func (q *QuestionHandler) index(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/question/not-found")
 	}
 
+	if c.Request().Header.Get("Hx-Request") == "true" {
+		return questionComponents.Questions().Render(c.Request().Context(), c.Response().Writer)
+	}
+
 	return questionPages.QuestionsPage(questionPages.QuestionsPageProps{Questions: questions}).Render(c.Request().Context(), c.Response().Writer)
 }
 
 func (q *QuestionHandler) Detail(c echo.Context) error {
 	id := c.Param("id")
 
-	uuid := helpers.StringToUUID(id)
+	uuid := utils.StringToUUID(id)
 
 	question, error := q.questionService.GetOne(c, uuid)
 
 	if error != nil {
 		return pages.NotFound(pages.NotFoundProps{Message: "This question was not found."}).Render(c.Request().Context(), c.Response().Writer)
+	}
+
+	if c.Request().Header.Get("Hx-Request") == "true" {
+		return questionComponents.QuestionDetail(questionComponents.QuestioNDetailProps{Question: question}).Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	return questionPages.QuestionDetail(questionPages.QuestionPageProps{Question: question}).Render(c.Request().Context(), c.Response().Writer)
@@ -82,6 +91,10 @@ func (q *QuestionHandler) new(c echo.Context) error {
 		selectValues = append(selectValues, components.SelectValues{Value: questionType.Value, Label: questionType.Label})
 	}
 
+	if c.Request().Header.Get("Hx-Request") == "true" {
+		return questionComponents.CreateQuestion(questionComponents.CreateQuestionProps{QuestionTypes: selectValues}).Render(c.Request().Context(), c.Response().Writer)
+	}
+
 	return questionPages.CreateQuestionPage(questionPages.CreateQuestionPageProps{QuestionTypes: selectValues}).Render(c.Request().Context(), c.Response().Writer)
 }
 
@@ -93,7 +106,7 @@ func (q *QuestionHandler) createQuestion(c echo.Context) error {
 	quetionBody, errorsMap, err := q.createQuestionHelper.ValidateQuestion(c)
 
 	if err != nil {
-		return helpers.SendServerErrorNotification(c)
+		return utils.SendServerErrorNotification(c)
 	}
 
 	if errorsMap != nil {
@@ -103,7 +116,7 @@ func (q *QuestionHandler) createQuestion(c echo.Context) error {
 	fmt.Println(quetionBody)
 
 	question, err := q.questionService.Create(c, db.CreateQuestionParams{
-		QuestionType: helpers.StringToUUID(quetionBody.QuestionType),
+		QuestionType: utils.StringToUUID(quetionBody.QuestionType),
 		Points:       int32(quetionBody.QuestionPoints),
 		Name:         quetionBody.QuestionName,
 		QuestionText: quetionBody.QuestionText,
@@ -121,20 +134,20 @@ func (q *QuestionHandler) createQuestion(c echo.Context) error {
 		})
 
 		if err != nil {
-			return helpers.SendServerErrorNotification(c)
+			return utils.SendServerErrorNotification(c)
 		}
 
 		fmt.Printf("New answer: %v", answer)
 	}
 
 	if err != nil {
-		return helpers.SendServerErrorNotification(c)
+		return utils.SendServerErrorNotification(c)
 	}
-	uuid, _ := helpers.ParseUUID(question.ID)
+	uuid, _ := utils.ParseUUID(question.ID)
 
-	redirectParams := helpers.NewDefaultRedirectParams(helpers.DefaultRedirectHeaders{Url: fmt.Sprintf("/question/%s", uuid), Swap: "OuterHTML", Target: "#create-question-component"},
+	redirectParams := utils.NewDefaultRedirectParams(utils.DefaultRedirectHeaders{Url: fmt.Sprintf("/question/%s", uuid), Swap: "OuterHTML", Target: "#create-question-component"},
 		fmt.Sprintf("Question %s created successfuly", quetionBody.QuestionName))
 
-	helpers.SendSuccessNotification(c, *redirectParams)
+	utils.SendSuccessNotification(c, *redirectParams)
 	return questionComponents.QuestionDetail(questionComponents.QuestioNDetailProps{Question: question}).Render(c.Request().Context(), c.Response().Writer)
 }

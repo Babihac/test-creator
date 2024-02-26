@@ -1,5 +1,7 @@
 package layouts
 
+import "echo-test/components"
+
 templ Base() {
 	<!DOCTYPE html>
 	<html lang="en">
@@ -14,7 +16,7 @@ templ Base() {
 			</script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		</head>
-		<body class="flex flex-col min-h-[100vh] min-w-[100vw]" hx-boost="true">
+		<body class="flex flex-col min-h-[100vh] min-w-[100vw]">
 			<div id="react-header"></div>
 			<div id="react-content"></div>
 			<div class="hidden" id="notification"></div>
@@ -28,24 +30,36 @@ templ Base() {
 							<li>
 								<span id="react-toggle-theme-mobile"></span>
 							</li>
-							<li><a href="/author">Authors</a></li>
-							<li><a href="/test">Tests</a></li>
-							<li><a href="/question">Questions</a></li>
+							<li>
+								@components.PageLink(components.PageLinkProps{Page: "author", Text: "Authors", Classes: "mobile"})
+							</li>
+							<li>
+								@components.PageLink(components.PageLinkProps{Page: "test", Text: "Tests", Classes: "mobile"})
+							</li>
+							<li>
+								@components.PageLink(components.PageLinkProps{Page: "question", Text: "Questions", Classes: "mobile"})
+							</li>
 						</ul>
 					</div>
 					<a href="/test" class="btn btn-ghost text-xl">Golang Fun</a>
 				</div>
 				<div class="navbar-center hidden lg:flex">
 					<ul class="menu menu-horizontal px-1">
-						<li><a href="/author" class="btn btn-ghost text-xl">Authors</a></li>
-						<li><a href="/test" class="btn btn-ghost text-xl">Tests</a></li>
-						<li><a href="/question" class="btn btn-ghost text-xl">Questions</a></li>
+						<li>
+							@components.PageLink(components.PageLinkProps{Page: "author", Text: "Authors"})
+						</li>
+						<li>
+							@components.PageLink(components.PageLinkProps{Page: "test", Text: "Tests"})
+						</li>
+						<li>
+							@components.PageLink(components.PageLinkProps{Page: "question", Text: "Questions"})
+						</li>
 					</ul>
 					<div class="h-[32px] w-[50px]" id="react-toggle-theme"></div>
 				</div>
 				<div class="navbar-end"></div>
 			</div>
-			<div hx-boost="true" class="container mx-auto px-6 mt-3 min-h-[90vh] mb-10">
+			<div id="main-content" hx-boost="true" class="container mx-auto px-6 mt-3 min-h-[90vh] mb-10">
 				{ children... }
 			</div>
 			<footer class="footer p-10 bg-base-300 text-base-content mt-auto">

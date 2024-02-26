@@ -10,6 +10,8 @@ import "context"
 import "io"
 import "bytes"
 
+import "echo-test/components"
+
 func Base() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -23,7 +25,55 @@ func Base() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Golang fun. App for creating online tests\"><title>Golang fun</title><link rel=\"stylesheet\" href=\"/css/tailwind.css\"><script defer src=\"https://kit.fontawesome.com/8a37954e59.js\" crossorigin=\"anonymous\"></script><script defer src=\"/js/htmx.js\">\n\t\t\t</script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js\"></script></head><body class=\"flex flex-col min-h-[100vh] min-w-[100vw]\" hx-boost=\"true\"><div id=\"react-header\"></div><div id=\"react-content\"></div><div class=\"hidden\" id=\"notification\"></div><div class=\"navbar bg-base-100\"><div class=\"navbar-start\"><div class=\"dropdown\"><div tabindex=\"0\" role=\"button\" class=\"btn btn-ghost lg:hidden\" aria-label=\"Menu\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h8m-8 6h16\"></path></svg></div><ul tabindex=\"0\" class=\"menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52\"><li><span id=\"react-toggle-theme-mobile\"></span></li><li><a href=\"/author\">Authors</a></li><li><a href=\"/test\">Tests</a></li><li><a href=\"/question\">Questions</a></li></ul></div><a href=\"/test\" class=\"btn btn-ghost text-xl\">Golang Fun</a></div><div class=\"navbar-center hidden lg:flex\"><ul class=\"menu menu-horizontal px-1\"><li><a href=\"/author\" class=\"btn btn-ghost text-xl\">Authors</a></li><li><a href=\"/test\" class=\"btn btn-ghost text-xl\">Tests</a></li><li><a href=\"/question\" class=\"btn btn-ghost text-xl\">Questions</a></li></ul><div class=\"h-[32px] w-[50px]\" id=\"react-toggle-theme\"></div></div><div class=\"navbar-end\"></div></div><div hx-boost=\"true\" class=\"container mx-auto px-6 mt-3 min-h-[90vh] mb-10\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Golang fun. App for creating online tests\"><title>Golang fun</title><link rel=\"stylesheet\" href=\"/css/tailwind.css\"><script defer src=\"https://kit.fontawesome.com/8a37954e59.js\" crossorigin=\"anonymous\"></script><script defer src=\"/js/htmx.js\">\n\t\t\t</script><script defer src=\"https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js\"></script></head><body class=\"flex flex-col min-h-[100vh] min-w-[100vw]\"><div id=\"react-header\"></div><div id=\"react-content\"></div><div class=\"hidden\" id=\"notification\"></div><div class=\"navbar bg-base-100\"><div class=\"navbar-start\"><div class=\"dropdown\"><div tabindex=\"0\" role=\"button\" class=\"btn btn-ghost lg:hidden\" aria-label=\"Menu\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 6h16M4 12h8m-8 6h16\"></path></svg></div><ul tabindex=\"0\" class=\"menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52\"><li><span id=\"react-toggle-theme-mobile\"></span></li><li>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PageLink(components.PageLinkProps{Page: "author", Text: "Authors", Classes: "mobile"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</li><li>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PageLink(components.PageLinkProps{Page: "test", Text: "Tests", Classes: "mobile"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</li><li>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PageLink(components.PageLinkProps{Page: "question", Text: "Questions", Classes: "mobile"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</li></ul></div><a href=\"/test\" class=\"btn btn-ghost text-xl\">Golang Fun</a></div><div class=\"navbar-center hidden lg:flex\"><ul class=\"menu menu-horizontal px-1\"><li>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PageLink(components.PageLinkProps{Page: "author", Text: "Authors"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</li><li>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PageLink(components.PageLinkProps{Page: "test", Text: "Tests"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</li><li>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PageLink(components.PageLinkProps{Page: "question", Text: "Questions"}).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</li></ul><div class=\"h-[32px] w-[50px]\" id=\"react-toggle-theme\"></div></div><div class=\"navbar-end\"></div></div><div id=\"main-content\" hx-boost=\"true\" class=\"container mx-auto px-6 mt-3 min-h-[90vh] mb-10\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

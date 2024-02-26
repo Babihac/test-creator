@@ -9,6 +9,7 @@ import (
 	"echo-test/helpers"
 	testPages "echo-test/pages/test"
 	"echo-test/services"
+	"echo-test/utils"
 	"fmt"
 	"net/http"
 	"time"
@@ -64,6 +65,10 @@ func (t *TestHandler) Index(c echo.Context) error {
 		return c.Redirect(http.StatusFound, "/test/not-found")
 	}
 
+	if c.Request().Header.Get("Hx-Request") == "true" {
+		return testComponents.Tests(tests).Render(c.Request().Context(), c.Response().Writer)
+	}
+
 	return testPages.TestsPage(tests).Render(c.Request().Context(), c.Response().Writer)
 }
 
@@ -76,12 +81,16 @@ func (t *TestHandler) NotFound(c echo.Context) error {
 func (t *TestHandler) Detail(c echo.Context) error {
 	id := c.Param("id")
 
-	uuid := helpers.StringToUUID(id)
+	uuid := utils.StringToUUID(id)
 
 	test, err := t.testService.GetOne(c, uuid)
 
 	if err != nil {
 		return c.Redirect(http.StatusFound, "/test/not-found")
+	}
+
+	if c.Request().Header.Get("Hx-Request") == "true" {
+		return testComponents.TestDetail(testComponents.TestDetailProps{Name: test.Name}).Render(c.Request().Context(), c.Response().Writer)
 	}
 
 	return testPages.TestDetailPage(testComponents.TestDetailProps{Name: test.Name}).Render(c.Request().Context(), c.Response().Writer)
@@ -112,6 +121,10 @@ func (t *TestHandler) new(c echo.Context) error {
 		defaultTeacherId = selectValues[0].Value
 	}
 
+	if c.Request().Header.Get("Hx-Request") == "true" {
+		return testComponents.CreateTest(testComponents.CreateTestProps{DefaultTeacherId: defaultTeacherId}).Render(ctx, c.Response().Writer)
+	}
+
 	return testPages.CreateTestPage(testComponents.CreateTestProps{DefaultTeacherId: defaultTeacherId}).Render(ctx, c.Response().Writer)
 }
 
@@ -126,7 +139,7 @@ func (t *TestHandler) createTest(c echo.Context) error {
 
 	newTest, err := t.testService.Create(c, db.CreateTestParams{
 		Name:      values.TestName,
-		TeacherID: helpers.StringToUUID(values.TeacherId),
+		TeacherID: utils.StringToUUID(values.TeacherId),
 		Duration: pgtype.Interval{
 			Microseconds: time.Duration.Microseconds(time.Minute * time.Duration(values.Duration)),
 			Valid:        time.Duration.Microseconds(time.Minute*time.Duration(values.Duration)) != 0,
@@ -138,7 +151,7 @@ func (t *TestHandler) createTest(c echo.Context) error {
 		c.Response().Header().Add("HX-Reswap", "none")
 		return components.Notification("end", "top", "alert-error", "Something went wrong").Render(c.Request().Context(), c.Response().Writer)
 	}
-	uuid, _ := helpers.ParseUUID(newTest.ID)
+	uuid, _ := utils.ParseUUID(newTest.ID)
 	c.Response().Header().Add("HX-Push-Url", fmt.Sprintf("/test/%s", uuid))
 	c.Response().Header().Add("HX-Reswap", "OuterHTML")
 	c.Response().Header().Add("HX-Retarget", "#create-test-component")
@@ -165,7 +178,7 @@ func (t *TestHandler) createTestStepTwo(c echo.Context) error {
 	ok, errorsMap, err := t.createTestHelper.ValidateStepOne(c)
 
 	if err != nil {
-		return helpers.SendServerErrorNotification(c)
+		return utils.SendServerErrorNotification(c)
 	}
 
 	if !ok {
@@ -184,7 +197,7 @@ func (t *TestHandler) createTestStepThree(c echo.Context) error {
 	ok, errorsMap, err := t.createTestHelper.ValidateStepTwo(c)
 
 	if err != nil {
-		return helpers.SendServerErrorNotification(c)
+		return utils.SendServerErrorNotification(c)
 	}
 
 	if !ok {

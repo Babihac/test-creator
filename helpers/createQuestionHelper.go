@@ -5,6 +5,7 @@ import (
 	questionComponents "echo-test/components/question"
 	"echo-test/errors"
 	"echo-test/services"
+	"echo-test/utils"
 	"fmt"
 
 	"github.com/labstack/echo/v4"
@@ -60,7 +61,7 @@ func (h *CreateQuestionHelper) PrepareQuestionForm(c echo.Context, errorsMap map
 	questionTypes, err := h.questionService.GetQuestionTypesSuggestions(c)
 
 	if err != nil {
-		return SendServerErrorNotification(c)
+		return utils.SendServerErrorNotification(c)
 	}
 
 	for _, questionType := range questionTypes {

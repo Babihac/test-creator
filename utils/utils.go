@@ -1,4 +1,4 @@
-package helpers
+package utils
 
 import (
 	"echo-test/components"
@@ -21,7 +21,7 @@ func NewDefaultRedirectParams(params DefaultRedirectHeaders, meesage string) *Re
 	headers := make(map[string]string, 0)
 
 	if params.Swap != "" {
-		headers["HX-ReS"] = params.Swap
+		headers["HX-ReSwap"] = params.Swap
 	}
 
 	if params.Target != "" {

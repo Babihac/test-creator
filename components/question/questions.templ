@@ -1,0 +1,12 @@
+package questionComponents
+
+import "echo-test/components"
+
+templ Questions() {
+	<div class="mb-3 flex gap-2 items-baseline justify-between w-full">
+		<div class="prose">
+			<h1>This will be questions page</h1>
+		</div>
+		@components.PageLink(components.PageLinkProps{Page: "question/new", Text: "Create new question", Classes: "btn btn-primary btn-sm ml-auto"})
+	</div>
+}
