@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -46,6 +47,17 @@ func main() {
 	userService := services.NewUserService(&logger, queries)
 	questionService := services.NewQuestionService(&logger, queries)
 	answerService := services.NewAnswerService(&logger, queries)
+
+	// Middleware to set Cache-Control header for static files
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			r := regexp.MustCompile(`^/(js|css|icons)/*`)
+			if r.MatchString(c.Request().URL.Path) {
+				c.Response().Header().Set("Cache-Control", "public, max-age=86400") // 86400 seconds = 1 day
+			}
+			return next(c)
+		}
+	})
 
 	e.Static("/", "assets")
 

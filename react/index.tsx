@@ -1,5 +1,4 @@
-import { createRoot, hydrateRoot } from "react-dom/client";
-import { Header, Body, Hello } from "./components";
+import { createRoot } from "react-dom/client";
 import { ToggleTheme } from "toggleTheme";
 
 const toggleRoot = document.getElementById("react-toggle-theme");
