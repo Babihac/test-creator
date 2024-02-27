@@ -16,7 +16,7 @@ templ Base() {
 			</script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		</head>
-		<body class="flex flex-col min-h-[100vh] min-w-[100vw]">
+		<body data-controller="toggle-theme" class="flex flex-col min-h-[100vh] min-w-[100vw]">
 			<div id="react-header"></div>
 			<div id="react-content"></div>
 			<div class="hidden" id="notification"></div>
@@ -28,7 +28,7 @@ templ Base() {
 						</div>
 						<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
 							<li>
-								<span id="react-toggle-theme-mobile"></span>
+								<span data-toggle-theme-target="toggle-theme"></span>
 							</li>
 							<li>
 								@components.PageLink(components.PageLinkProps{Page: "author", Text: "Authors", Classes: "mobile"})
@@ -62,10 +62,10 @@ templ Base() {
 			<div id="main-content" hx-boost="true" class="container mx-auto px-6 mt-3 min-h-[90vh] mb-10">
 				{ children... }
 			</div>
-			<footer class="footer p-10 bg-base-300 text-base-content mt-auto">
+			<footer data-controller="hello" class="footer p-10 bg-base-300 text-base-content mt-auto">
 				<nav>
-					<div class="footer-title">Services</div>
-					<a href="#" class="link link-hover">Branding</a>
+					<div data-hello-target="name" class="footer-title">Services</div>
+					<a data-action="click->hello#greet" href="#" class="link link-hover">Branding</a>
 					<a href="#" class="link link-hover">Design</a>
 					<a href="#" class="link link-hover">Marketing</a>
 					<a href="#" class="link link-hover">Advertisement</a>
@@ -86,7 +86,7 @@ templ Base() {
 					</div>
 				</nav>
 			</footer>
-			<script defer src="/js/index.js"></script>
+			<script defer src="/js/main.js"></script>
 		</body>
 	</html>
 }
