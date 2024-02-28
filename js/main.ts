@@ -1,5 +1,6 @@
 import { Application } from "@hotwired/stimulus";
-import HelloController from "./helloController";
+import ToggleThemeController from "./toggleThemeController";
+import CreateTestController from "./createTest";
 
 declare global {
   interface Window {
@@ -9,4 +10,5 @@ declare global {
 
 window.Stimulus = Application.start();
 
-window.Stimulus.register("hello", HelloController);
+window.Stimulus.register("toggle-theme", ToggleThemeController);
+window.Stimulus.register("create-test", CreateTestController);

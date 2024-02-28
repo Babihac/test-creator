@@ -19,7 +19,7 @@ templ CreateTestStepOne(props CreateTestStepOneProps) {
 				@components.TextInput(components.TextInputProps{Name: "test-name", Label: "Test name", Placeholder: "", ID: "test-name-input", Required: true, Model: "testName", Error: props.Erors["TestName"]})
 			</div>
 			<div id="test-duration" class="col-span-3">
-				@components.RangeInput(components.RangeInputProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes", Model: "testDuration"})
+				@components.RangeInputExp(components.RangeInputExpProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes", ValueAttrs: templ.Attributes{"data-create-test-target": "durationValue"}, InputAttrs: templ.Attributes{"data-create-test-target": "durationInput", "data-action": "create-test#updateDuration"}})
 			</div>
 			<div id="teacher-name" class="col-span-2">
 				@components.SelectInput(components.SelectInputProps{Name: "teacher-id", Label: "Supervising teacher", ID: "test-type-input", Description: "Supervising teacher", ContextKey: contextValues.USER_SUGGESTIONS, Model: "teacherId"})

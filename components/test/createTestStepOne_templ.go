@@ -42,7 +42,7 @@ func CreateTestStepOne(props CreateTestStepOneProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.RangeInput(components.RangeInputProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes", Model: "testDuration"}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.RangeInputExp(components.RangeInputExpProps{Name: "test-duration", Label: "Test duration", ID: "test-duration-input", Min: 15, Max: 180, Step: 15, Value: 60, Unit: "minutes", ValueAttrs: templ.Attributes{"data-create-test-target": "durationValue"}, InputAttrs: templ.Attributes{"data-create-test-target": "durationInput", "data-action": "create-test#updateDuration"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

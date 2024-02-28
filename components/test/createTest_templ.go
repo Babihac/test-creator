@@ -29,7 +29,7 @@ func CreateTest(props CreateTestProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"create-test-component\" class=\"flex gap-3 flex-col min-h-[80vh]\"><div class=\"prose mb-6\"><h1 class=\"text-primary\">Create new test</h1></div><div class=\"flex flex-1 mb-7 form-shadow px-4 rounded-lg flex-col lg:flex-row\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div data-controller=\"create-test\" id=\"create-test-component\" class=\"flex gap-3 flex-col min-h-[80vh]\"><div class=\"prose mb-6\"><h1 class=\"text-primary\">Create new test</h1></div><div class=\"flex flex-1 mb-7 form-shadow px-4 rounded-lg flex-col lg:flex-row\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

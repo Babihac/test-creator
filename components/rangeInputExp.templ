@@ -1,0 +1,71 @@
+package components
+
+import "fmt"
+
+type RangeInputExpProps struct {
+	Min        int
+	Max        int
+	Step       int
+	Value      int
+	Disabled   bool
+	Name       string
+	Label      string
+	ID         string
+	Unit       string
+	Controller string
+	ValueAttrs templ.Attributes
+	InputAttrs templ.Attributes
+}
+
+func (p *RangeInputExpProps) generateSteps() []string {
+	steps := make([]string, 0)
+
+	for i := p.Min; i <= p.Max; i += p.Step {
+		steps = append(steps, fmt.Sprintf("%d", i))
+	}
+	return steps
+}
+
+func (p *RangeInputExpProps) fullLabel() string {
+	if p.Label == "" {
+		return "Range"
+	}
+	return fmt.Sprintf("%s [%s]", p.Label, p.Unit)
+}
+
+func (p *RangeInputExpProps) get(v any) string {
+	if v == nil {
+		return ""
+	}
+	return fmt.Sprintf("%v", v)
+}
+
+templ RangeInputExp(p RangeInputExpProps) {
+	<div id={ p.ID }>
+		<label class="label mb-1">
+			<div>
+				{ p.Label }
+				<span>[</span>
+				<span
+					{ p.ValueAttrs... }
+				></span>
+				<span>{ p.Unit }</span>
+				<span>]</span>
+			</div>
+		</label>
+		<input
+			{ p.InputAttrs... }
+			name={ p.Name }
+			type="range"
+			min={ p.get(p.Min) }
+			max={ p.get(p.Max) }
+			class="range"
+			step={ p.get(p.Step) }
+		/>
+		<div class="w-full flex justify-between text-xs px-2 mt-1">
+			for _, step := range p.generateSteps() {
+				<label>{ step }</label>
+			}
+		</div>
+	</div>
+}

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tailwindcss -i assets/css/styles.css -o assets/css/tailwind.css --minify",
     "watch": "tailwindcss -i assets/css/styles.css -o assets/css/tailwind.css --watch",
-    "js-build": "esbuild --bundle js/main.js --outdir=assets/js --minify --sourcemap --global-name=bundle --watch",
+    "js-build": "esbuild --bundle js/main.ts --outdir=assets/js --minify --sourcemap --global-name=bundle --watch",
     "dev": "npm-run-all --parallel watch js-build"
   },
   "author": "",

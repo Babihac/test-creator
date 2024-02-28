@@ -16,7 +16,7 @@ templ Base() {
 			</script>
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		</head>
-		<body data-controller="toggle-theme" class="flex flex-col min-h-[100vh] min-w-[100vw]">
+		<body data-controller="toggle-theme" class="flex flex-col min-h-[100vh] min-w-[100vw]" data-action="click->toggleTheme#toggle">
 			<div id="react-header"></div>
 			<div id="react-content"></div>
 			<div class="hidden" id="notification"></div>
@@ -28,7 +28,12 @@ templ Base() {
 						</div>
 						<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
 							<li>
-								<span data-toggle-theme-target="toggle-theme"></span>
+								<button
+									data-toggle-theme-target="toggleTheme"
+									data-action="click->toggle-theme#toggle"
+									aria-label="Toggle theme"
+									class="size-[24px] bg-transparent bg-no-repeat bg-center"
+								></button>
 							</li>
 							<li>
 								@components.PageLink(components.PageLinkProps{Page: "author", Text: "Authors", Classes: "mobile"})
@@ -55,7 +60,12 @@ templ Base() {
 							@components.PageLink(components.PageLinkProps{Page: "question", Text: "Questions"})
 						</li>
 					</ul>
-					<div class="h-[32px] w-[50px]" id="react-toggle-theme"></div>
+					<button
+						data-toggle-theme-target="toggleTheme"
+						data-action="click->toggle-theme#toggle"
+						aria-label="Toggle theme"
+						class="size-[24px] bg-transparent bg-no-repeat bg-center btn-ghost btn btn-sm mr-6"
+					></button>
 				</div>
 				<div class="navbar-end"></div>
 			</div>
