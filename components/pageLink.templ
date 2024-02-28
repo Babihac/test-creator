@@ -24,5 +24,5 @@ func (p PageLinkProps) WithDefaultTarget() string {
 }
 
 templ PageLink(props PageLinkProps) {
-	<button aria-label={ fmt.Sprintf("Link to %s page", props.Page) } hx-get={ fmt.Sprintf("/%s", props.Page) } hx-target={ fmt.Sprintf("%s", props.WithDefaultTarget()) } hx-push-url="true" class={ props.WithDefaults() }>{ props.Text }</button>
+	<button role="link" aria-label={ props.Text } hx-get={ fmt.Sprintf("/%s", props.Page) } hx-target={ fmt.Sprintf("%s", props.WithDefaultTarget()) } hx-push-url="true" class={ props.WithDefaults() }>{ props.Text }</button>
 }

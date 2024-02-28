@@ -12,8 +12,8 @@ type TextInputProps struct {
 	classes     string
 	ID          string
 	Required    bool
-	Model       string
 	OOB         bool
+	InputAttrs  templ.Attributes
 }
 
 templ TextInput(props TextInputProps) {
@@ -22,6 +22,8 @@ templ TextInput(props TextInputProps) {
 			<span class="label-text font-bold">{ props.Label }</span>
 			if props.Error != "" {
 				<span class="label-text-alt text-red-500">{ props.Error }</span>
+			} else {
+				<span id={ fmt.Sprintf("error-%s", props.Name) }></span>
 			}
 		</div>
 		<div class="flex input input-bordered items-center">
@@ -31,9 +33,7 @@ templ TextInput(props TextInputProps) {
 				value={ props.Value }
 				placeholder={ props.Placeholder }
 				class={ fmt.Sprintf("grow bg-transparent %s", props.classes) }
-				if props.Model != "" {
-					x-model.fill={ props.Model }
-				}
+				{ props.InputAttrs... }
 			/>
 			if props.Required {
 				<span class="badge badge-warning">Required</span>

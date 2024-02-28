@@ -10,8 +10,6 @@ import "context"
 import "io"
 import "bytes"
 
-import "fmt"
-
 type CreateTestProps struct {
 	DefaultTeacherId string
 }
@@ -40,23 +38,7 @@ func CreateTest(props CreateTestProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"divider divider-horizontal\"></div><div class=\"flex-1\"><form x-data=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(fmt.Sprintf((`
-					{
-						currentStep: 1, 
-						testName: '', teacherId: '%s', 
-						testDuration: '60', 
-						maxScore: '100', 
-						minRequiredScore: '60',
-					}
-					`), props.DefaultTeacherId)))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" action=\"POST\"><div x-show=\"currentStep === 1\" id=\"create-test-form-step-1\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"divider divider-horizontal\"></div><div class=\"flex-1\"><form class=\"h-full\" action=\"POST\"><div class=\"h-full\" id=\"create-test-form-step-1\" data-create-test-target=\"step\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -64,7 +46,7 @@ func CreateTest(props CreateTestProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div x-show=\"currentStep === 2\" id=\"create-test-form-step-2\"></div><div x-show=\"currentStep === 3\" id=\"create-test-form-step-3\"></div><div x-show=\"currentStep === 4\" id=\"create-test-form-step-4\"></div></form></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"h-full\" id=\"create-test-form-step-2\" data-create-test-target=\"step\"></div><div id=\"create-test-form-step-3\" data-create-test-target=\"step\"></div><div id=\"create-test-form-step-4\" data-create-test-target=\"step\"></div></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -15,9 +15,9 @@ import (
 )
 
 type StepOneForm struct {
-	TestName    string `form:"test-name" validate:"required"`
-	TeacherId   string `form:"teacher-id" validate:"required,uuid"`
-	Duration    int    `form:"test-duration" validate:"required,gte=15,lte=180,numeric"`
+	TestName    string `form:"test-name" validate:"required" json:"test-name"`
+	TeacherId   string `form:"teacher-id" validate:"required,uuid" json:"teacher-id"`
+	Duration    int    `form:"test-duration" validate:"required,gte=15,lte=180,numeric" json:"duration"`
 	CurrentStep int    `form:"steps-loaded"`
 }
 
@@ -26,8 +26,8 @@ func (s *StepOneForm) LteFieldError(fieldName string) string {
 }
 
 type StepTwoForm struct {
-	MaxScore         int `form:"max-score" validate:"required,gte=0,numeric"`
-	MinRequiredScore int `form:"min-required-score" validate:"required,numeric,gte=0,ltefield=MaxScore"`
+	MaxScore         int `form:"max-score" validate:"required,gte=0,numeric" json:"max-score"`
+	MinRequiredScore int `form:"min-required-score" validate:"required,numeric,gte=0,ltefield=MaxScore" json:"min-required-score"`
 	CurrentStep      int `form:"steps-loaded"`
 }
 
@@ -78,7 +78,7 @@ func (h *CreateTestHelper) PrepareStepOne(c echo.Context, errorsMap map[string]s
 
 	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-1")
 
-	testComponents.CreateTestStepOne(testComponents.CreateTestStepOneProps{Erors: errorsMap}).Render(ctx, c.Response().Writer)
+	testComponents.CreateTestStepOne(testComponents.CreateTestStepOneProps{}).Render(ctx, c.Response().Writer)
 	return testComponents.Stepper(testComponents.StepperProps{CurrentStep: 1, Steps: h.steps, Oob: true}).Render(ctx, c.Response().Writer)
 
 }
@@ -115,15 +115,15 @@ func (h *CreateTestHelper) ValidateStepTwo(c echo.Context) (bool, *map[string]st
 	return h.validateStep(c, stepTwoValues)
 }
 
-func (h *CreateTestHelper) validateStep(c echo.Context, step types.IStep) (bool, *map[string]string, error) {
-	if err := c.Bind(step); err != nil {
+func (h *CreateTestHelper) validateStep(c echo.Context, form types.IForm) (bool, *map[string]string, error) {
+	if err := c.Bind(form); err != nil {
 		return false, nil, err
 	}
 
 	errorsMap := make(map[string]string, 0)
 
-	if err := c.Validate(step); err != nil {
-		errors.PopulateErrorMap(&errorsMap, err, step)
+	if err := c.Validate(form); err != nil {
+		errors.PopulateErrorMap(&errorsMap, err, form)
 	}
 
 	if len(errorsMap) != 0 {
@@ -147,4 +147,8 @@ func (h *CreateTestHelper) ValidateForm(c echo.Context) (*CreateTestForm, bool, 
 	}
 
 	return formValues, true, nil
+}
+
+func (h *CreateTestHelper) InputErrors(c echo.Context, errors map[string]string) error {
+	return components.InputErrors(components.InputErrorsProps{Errors: errors}).Render(c.Request().Context(), c.Response().Writer)
 }

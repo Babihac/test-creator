@@ -10,7 +10,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"reflect"
 	"regexp"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -61,8 +63,20 @@ func main() {
 
 	e.Static("/", "assets")
 
+	cValidator := validator.New()
+
+	cValidator.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+
+		if name == "-" {
+			return ""
+		}
+
+		return name
+	})
+
 	e.Validator = &customValidator.CustomValidator{
-		Validator: validator.New(),
+		Validator: cValidator,
 	}
 
 	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{

@@ -182,7 +182,7 @@ func (t *TestHandler) createTestStepTwo(c echo.Context) error {
 	}
 
 	if !ok {
-		return t.createTestHelper.PrepareStepOne(c, *errorsMap)
+		return t.createTestHelper.InputErrors(c, *errorsMap)
 	}
 
 	c.Response().Header().Add("HX-Push-Url", "/test/new/step2")
@@ -201,7 +201,7 @@ func (t *TestHandler) createTestStepThree(c echo.Context) error {
 	}
 
 	if !ok {
-		return t.createTestHelper.PrepareStepTwo(c, *errorsMap)
+		return t.createTestHelper.InputErrors(c, *errorsMap)
 	}
 
 	return t.createTestHelper.PrepareStepThree(c, map[string]string{})

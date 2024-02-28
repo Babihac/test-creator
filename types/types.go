@@ -1,5 +1,5 @@
 package types
 
-type IStep interface {
+type IForm interface {
 	LteFieldError(fieldName string) string
 }

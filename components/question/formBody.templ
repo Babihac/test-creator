@@ -11,13 +11,13 @@ templ FormBody(props FormBodyProps) {
 	<div id="new-question" class="flex flex-col gap-3">
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mt-6">
 			<div class="col-span-1">
-				@components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", Model: "questionName", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]})
+				@components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]})
 			</div>
 			<div class="col-span-1">
-				@components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", Model: "questionType", ID: "question-type-input", Values: props.QuestionTypes})
+				@components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", ID: "question-type-input", Values: props.QuestionTypes})
 			</div>
 			<div class="col-span-1">
-				@components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", Model: "questionPoints", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]})
+				@components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]})
 			</div>
 			<div class="col-span-1 lg:col-span-3">
 				@components.TextArea(components.TextAreaProps{Name: "question-text", Placeholder: "Formulate your question.", Label: "Question text", Model: "questionText", ID: "question-text-input", Required: true, Error: props.Errors["QuestionText"]})

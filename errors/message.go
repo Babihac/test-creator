@@ -7,7 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func Message(err validator.FieldError, step types.IStep) string {
+func Message(err validator.FieldError, step types.IForm) string {
 	switch err.Tag() {
 	case "required":
 		return "Please, fill in this field"

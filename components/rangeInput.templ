@@ -3,19 +3,18 @@ package components
 import "fmt"
 
 type RangeInputProps struct {
-	Min       int
-	Max       int
-	Step      int
-	Value     int
-	Disabled  bool
-	ReadOnly  bool
-	AutoFocus bool
-	Form      string
-	Name      string
-	Label     string
-	ID        string
-	Unit      string
-	Model     string
+	Min        int
+	Max        int
+	Step       int
+	Value      int
+	Disabled   bool
+	Name       string
+	Label      string
+	ID         string
+	Unit       string
+	Controller string
+	ValueAttrs templ.Attributes
+	InputAttrs templ.Attributes
 }
 
 func (p *RangeInputProps) generateSteps() []string {
@@ -42,28 +41,27 @@ func (p *RangeInputProps) get(v any) string {
 }
 
 templ RangeInput(p RangeInputProps) {
-	<div id={ p.ID }>
-		<label class="label mb-1">
+	<div>
+		<label for={ p.ID } class="label mb-1">
 			<div>
 				{ p.Label }
-				if p.Model != "" {
-					<span>[</span>
-					<span x-text={ p.Model }></span>
-					<span>{ p.Unit }</span>
-					<span>]</span>
-				}
+				<span>[</span>
+				<span
+					{ p.ValueAttrs... }
+				></span>
+				<span>{ p.Unit }</span>
+				<span>]</span>
 			</div>
 		</label>
 		<input
+			id={ p.ID }
+			{ p.InputAttrs... }
 			name={ p.Name }
 			type="range"
 			min={ p.get(p.Min) }
 			max={ p.get(p.Max) }
 			class="range"
 			step={ p.get(p.Step) }
-			if p.Model != "" {
-				x-model={ p.Model }
-			}
 		/>
 		<div class="w-full flex justify-between text-xs px-2 mt-1">
 			for _, step := range p.generateSteps() {

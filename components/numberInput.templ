@@ -14,7 +14,7 @@ type NumberInputProps struct {
 	Required    bool
 	Min         string
 	Max         string
-	Model       string
+	InputAttrs  templ.Attributes
 }
 
 templ NumberInput(props NumberInputProps) {
@@ -23,10 +23,13 @@ templ NumberInput(props NumberInputProps) {
 			<span class="label-text font-bold">{ props.Label }</span>
 			if props.Error != "" {
 				<span class="label-text-alt text-red-500">{ props.Error }</span>
+			} else {
+				<span id={ fmt.Sprintf("error-%s", props.Name) }></span>
 			}
 		</div>
 		<div class="flex input input-bordered items-center">
 			<input
+				{ props.InputAttrs... }
 				name={ props.Name }
 				type="number"
 				value={ props.Value }
@@ -37,9 +40,6 @@ templ NumberInput(props NumberInputProps) {
 				}
 				if props.Max != "" {
 					max={ props.Max }
-				}
-				if props.Model != "" {
-					x-model.fill={ props.Model }
 				}
 			/>
 			if props.Required {

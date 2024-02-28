@@ -1,7 +1,5 @@
 package testComponents
 
-import "fmt"
-
 type CreateTestProps struct {
 	DefaultTeacherId string
 }
@@ -19,23 +17,15 @@ templ CreateTest(props  CreateTestProps) {
 			<div class="divider divider-horizontal"></div>
 			<div class="flex-1">
 				<form
-					x-data={ fmt.Sprintf((`
-					{
-						currentStep: 1, 
-						testName: '', teacherId: '%s', 
-						testDuration: '60', 
-						maxScore: '100', 
-						minRequiredScore: '60',
-					}
-					`), props.DefaultTeacherId) }
+					class="h-full"
 					action="POST"
 				>
-					<div x-show="currentStep === 1" id="create-test-form-step-1">
+					<div class="h-full" id="create-test-form-step-1" data-create-test-target="step">
 						@CreateTestStepOne(CreateTestStepOneProps{})
 					</div>
-					<div x-show="currentStep === 2" id="create-test-form-step-2"></div>
-					<div x-show="currentStep === 3" id="create-test-form-step-3"></div>
-					<div x-show="currentStep === 4" id="create-test-form-step-4"></div>
+					<div class="h-full" id="create-test-form-step-2" data-create-test-target="step"></div>
+					<div id="create-test-form-step-3" data-create-test-target="step"></div>
+					<div id="create-test-form-step-4" data-create-test-target="step"></div>
 				</form>
 			</div>
 		</div>

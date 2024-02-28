@@ -29,11 +29,11 @@ func CreateTestStepScore(props CreateTestStepScoreProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-init=\"currentStep = 2\" class=\"flex flex-col justify-between flex-1 h-full\"><div id=\"maximal-score\" class=\"grid grid-cols-2 lg:grid-cols-5 gap-5 w-full\"><div class=\"col-span-2\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div data-create-test-target=\"stepTwo\" class=\"flex flex-col justify-between flex-1 h-full\"><div id=\"maximal-score\" class=\"grid grid-cols-2 lg:grid-cols-5 gap-5 w-full\"><div class=\"col-span-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Label: "Maximum points", Name: "max-score", Min: "10", Required: true, Model: "maxScore", Error: props.Erors["MaxScore"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Label: "Maximum points", Name: "max-score", Min: "10", Required: true, Error: props.Erors["MaxScore"], InputAttrs: templ.Attributes{"data-create-test-target": "maxScoreInput"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -41,7 +41,7 @@ func CreateTestStepScore(props CreateTestStepScoreProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Label: "Minimal score required", Name: "min-required-score", Min: "10", Required: true, Model: "minRequiredScore", Error: props.Erors["MinRequiredScore"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Label: "Minimal score required", Name: "min-required-score", Min: "10", Required: true, Error: props.Erors["MinRequiredScore"], InputAttrs: templ.Attributes{"data-create-test-target": "minRequiredScoreInput"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

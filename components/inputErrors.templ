@@ -1,0 +1,13 @@
+package components;
+
+import "fmt"
+
+type InputErrorsProps struct {
+	Errors map[string]string
+}
+
+templ InputErrors(props InputErrorsProps) {
+	for key, value := range props.Errors {
+		<span hx-swap-oob="true" id={ fmt.Sprintf("error-%s", key) } class="text-red-500 label-text-alt">{ value }</span>
+	}
+}

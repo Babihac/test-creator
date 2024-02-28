@@ -34,7 +34,7 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", Model: "questionName", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -42,7 +42,7 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", Model: "questionType", ID: "question-type-input", Values: props.QuestionTypes}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", ID: "question-type-input", Values: props.QuestionTypes}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +50,7 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", Model: "questionPoints", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
