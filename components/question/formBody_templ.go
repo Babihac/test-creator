@@ -14,7 +14,6 @@ import "echo-test/components"
 
 type FormBodyProps struct {
 	QuestionTypes []components.SelectValues
-	Errors        map[string]string
 }
 
 func FormBody(props FormBodyProps) templ.Component {
@@ -34,7 +33,7 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", ID: "question-name-input", Required: true, InputAttrs: templ.Attributes{"data-create-question-target": "questionNameInput"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -42,7 +41,7 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", ID: "question-type-input", Values: props.QuestionTypes}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", ID: "question-type-input", Values: props.QuestionTypes, InputAttrs: templ.Attributes{"data-create-question-target": "questionTypeInput"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +49,7 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", ID: "question-points-input", Required: true, Min: "0", InputAttrs: templ.Attributes{"data-create-question-target": "questionPointsInput"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,19 +57,19 @@ func FormBody(props FormBodyProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = components.TextArea(components.TextAreaProps{Name: "question-text", Placeholder: "Formulate your question.", Label: "Question text", Model: "questionText", ID: "question-text-input", Required: true, Error: props.Errors["QuestionText"]}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = components.TextArea(components.TextAreaProps{Name: "question-text", Placeholder: "Formulate your question.", Label: "Question text", ID: "question-text-input", Required: true, InputAttrs: templ.Attributes{"data-create-question-target": "questionTextInput"}}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"divider w-full\"></div><div class=\"prose flex align-baseline gap-3\"><h2>Answers Definition</h2><button @click=\"addAnswer\" class=\"btn btn-outline btn-sm btn-success\" type=\"button\">New</button></div><template id=\"answers-definition-list\" x-for=\"(answer, index) in answers\" :key=\"answer.id\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"divider w-full\"></div><div class=\"prose flex align-baseline gap-3\"><h2>Answers Definition</h2><input name=\"questions-count\" type=\"hidden\" data-create-question-target=\"questionsCountInput\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = AnswerDefinitionRow().Render(ctx, templ_7745c5c3_Buffer)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString("0"))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</template><div class=\"divider w-full\"></div><div class=\"ml-auto\"><button hx-post=\"/question\" hx-target=\"#new-question\" hx-swap=\"outerHTML\" hx-target class=\"btn btn-primary\">Create Question</button></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <button hx-get=\"/question/add-answer\" hx-target=\"#answer-list\" hx-include=\"[name=&#39;questions-count&#39;]\" hx-swap=\"beforeend\" class=\"btn btn-outline btn-sm btn-success\" type=\"button\">New</button></div><div id=\"answer-list\" data-create-question-target=\"answerList\"></div><div class=\"divider w-full\"></div><div class=\"ml-auto mb-3\"><button hx-post=\"/question\" hx-swap=\"none\" class=\"btn btn-primary\">Create Question</button></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

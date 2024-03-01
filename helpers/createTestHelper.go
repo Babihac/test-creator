@@ -8,7 +8,6 @@ import (
 	"echo-test/errors"
 	"echo-test/services"
 	"echo-test/types"
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -110,8 +109,6 @@ func (h *CreateTestHelper) ValidateStepOne(c echo.Context) (bool, *map[string]st
 func (h *CreateTestHelper) ValidateStepTwo(c echo.Context) (bool, *map[string]string, error) {
 	stepTwoValues := &StepTwoForm{}
 
-	fmt.Printf("Current step: %d\n", stepTwoValues.CurrentStep)
-
 	return h.validateStep(c, stepTwoValues)
 }
 
@@ -139,8 +136,6 @@ func (h *CreateTestHelper) ValidateForm(c echo.Context) (*CreateTestForm, bool, 
 	if err := c.Bind(formValues); err != nil {
 		return nil, false, err
 	}
-
-	fmt.Printf("Final form values: %v\n", formValues)
 
 	if err := c.Validate(formValues); err != nil {
 		return nil, false, err

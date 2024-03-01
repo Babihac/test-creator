@@ -30,11 +30,11 @@ func CreateQuestion(props CreateQuestionProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"create-question-component\" class=\"flex gap-3 flex-col min-h-[80vh]\"><div class=\"prose mb-6\"><h1 class=\"text-primary\">Create new question</h1></div><div class=\"flex flex-1 mb-7 form-shadow px-4 rounded-lg\"><form id=\"create-question-form\" x-data=\"{\n					questionName: &#39;&#39;,\n					questionType: &#39;&#39;,\n					questionPoints: &#39;&#39;,\n					questionText: &#39;&#39;,\n					answers: [],\n					addAnswer() {\n						this.answers.push({\n							id: this.uniqueId(),\n							answerText: &#39;&#39;,\n							isCorrect: false,\n						});\n					},\n					removeAnswer(index) {\n						this.answers.splice(index, 1);\n					},\n					uniqueId: function() {\n						return Math.random().toString(36).substr(2, 9);\n					},\n				}\" class=\"flex-1\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div data-controller=\"create-question\" id=\"create-question-component\" class=\"flex gap-3 flex-col min-h-[80vh]\"><div class=\"prose mb-6\"><h1 class=\"text-primary\">Create new question</h1></div><div class=\"flex flex-1 mb-7 form-shadow px-4 rounded-lg\"><form id=\"create-question-form\" class=\"flex-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = FormBody(FormBodyProps{QuestionTypes: props.QuestionTypes, Errors: props.Errors}).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = FormBody(FormBodyProps{QuestionTypes: props.QuestionTypes}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

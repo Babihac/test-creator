@@ -8,36 +8,16 @@ type CreateQuestionProps struct {
 }
 
 templ CreateQuestion(props CreateQuestionProps) {
-	<div id="create-question-component" class="flex gap-3 flex-col min-h-[80vh]">
+	<div data-controller="create-question" id="create-question-component" class="flex gap-3 flex-col min-h-[80vh]">
 		<div class="prose mb-6">
 			<h1 class="text-primary">Create new question</h1>
 		</div>
 		<div class="flex flex-1 mb-7 form-shadow px-4 rounded-lg">
 			<form
 				id="create-question-form"
-				x-data="{
-					questionName: '',
-					questionType: '',
-					questionPoints: '',
-					questionText: '',
-					answers: [],
-					addAnswer() {
-						this.answers.push({
-							id: this.uniqueId(),
-							answerText: '',
-							isCorrect: false,
-						});
-					},
-					removeAnswer(index) {
-						this.answers.splice(index, 1);
-					},
-					uniqueId: function() {
-						return Math.random().toString(36).substr(2, 9);
-					},
-				}"
 				class="flex-1"
 			>
-				@FormBody(FormBodyProps{QuestionTypes: props.QuestionTypes, Errors: props.Errors})
+				@FormBody(FormBodyProps{QuestionTypes: props.QuestionTypes})
 			</form>
 		</div>
 	</div>

@@ -26,3 +26,7 @@ func (a *AnswerService) Get(ctx echo.Context) ([]db.Answer, error) {
 func (a *AnswerService) Create(ctx echo.Context, params db.CreateAnswerParams) (db.Answer, error) {
 	return a.queries.CreateAnswer(ctx.Request().Context(), params)
 }
+
+func (a *AnswerService) CreateTx(ctx echo.Context, params db.CreateAnswerParams, trx *db.Queries) (db.Answer, error) {
+	return trx.CreateAnswer(ctx.Request().Context(), params)
+}

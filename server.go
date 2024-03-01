@@ -98,7 +98,7 @@ func main() {
 
 	e.Use(middleware.Gzip())
 
-	router.Init(e, &logger, authorService, testService, userService, questionService, answerService, dbpool)
+	router.Init(e, &logger, authorService, testService, userService, questionService, answerService, dbpool, queries)
 
 	e.Logger.Fatal(e.Start(":8000"))
 }

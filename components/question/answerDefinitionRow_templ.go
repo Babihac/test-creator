@@ -11,13 +11,13 @@ import "io"
 import "bytes"
 
 import "echo-test/components"
+import "fmt"
 
 type AnswerDefinitionRowProps struct {
-	AnswerText string
-	IsCorrect  bool
+	Index int64
 }
 
-func AnswerDefinitionRow() templ.Component {
+func AnswerDefinitionRow(id int64) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -30,20 +30,29 @@ func AnswerDefinitionRow() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex items-center gap-4 flex-wrap\"><div class=\"lg:min-w-[350px]\"><label class=\"form-control w-full max-w-sm\"><div class=\"label\"><span class=\"label-text font-bold\">Answer</span> <span x-show=\"answer.answerText===&#39;&#39;\" class=\"label-text-alt text-red-500\">Please, fill in this field</span></div><div class=\"flex input input-bordered items-center\"><input name=\"answer[text]\" type=\"text\" placeholder=\"Enter answer\" class=\"grow bg-transparent %s\" x-model=\"answer.answerText\"> <span class=\"badge badge-warning\">Required</span></div><div class=\"label\"></div></label></div><div class=\"pt-5 flex items-center\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div data-create-question-target=\"questionAnswer\" class=\"flex answer-row items-center gap-4 flex-wrap\"><div class=\"lg:min-w-[350px]\"><label class=\"form-control w-full max-w-sm\"><div class=\"label\"><span class=\"label-text font-bold\">Answer</span> <span id=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(fmt.Sprintf("error-answer-text-%d", id)))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></span></div><div class=\"flex input input-bordered items-center\"><input data-create-question-target=\"answerTextInput\" name=\"answer[text]\" type=\"text\" placeholder=\"Enter answer\" class=\"grow bg-transparent %s\"> <span class=\"badge badge-warning\">Required</span></div><div class=\"label\"></div></label></div><div class=\"pt-5 flex items-center\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = components.Toggle(
 			components.ToggleProps{
-				Label: "Correct answer",
-				Name:  "answer[correct]",
-				Model: "answer.isCorrect",
+				Label:           "Correct answer",
+				Name:            "answer[correct]",
+				InputAttributes: templ.Attributes{"data-action": "create-question#toggleCorrectAnswer", "data-create-question-target": "answerCorrectInput"},
+				Checked:         true,
 			}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div @click=\"removeAnswer(index)\" class=\"btn btn-circle btn-error bg-delete bg-no-repeat bg-center btn-xs\"></div></div><div class=\"divider w-full lg:hidden\"></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"btn btn-circle btn-error bg-delete bg-no-repeat bg-center btn-xs\" data-action=\"click-&gt;create-question#removeAnswerDefinition\"></div></div><div class=\"divider w-full lg:hidden\"></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

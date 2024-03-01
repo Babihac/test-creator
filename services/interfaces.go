@@ -36,10 +36,12 @@ type IQuestionService interface {
 	Get(ctx echo.Context) ([]db.Question, error)
 	GetQuestionTypesSuggestions(ctx echo.Context) ([]db.GetQuestionTypeSuggestionsRow, error)
 	Create(ctx echo.Context, params db.CreateQuestionParams) (db.Question, error)
+	CreateTx(ctx echo.Context, params db.CreateQuestionParams, trx *db.Queries) (db.Question, error)
 	GetOne(ctx echo.Context, id pgtype.UUID) (db.Question, error)
 }
 
 type IAnswerService interface {
 	Get(ctx echo.Context) ([]db.Answer, error)
 	Create(ctx echo.Context, params db.CreateAnswerParams) (db.Answer, error)
+	CreateTx(ctx echo.Context, params db.CreateAnswerParams, trx *db.Queries) (db.Answer, error)
 }

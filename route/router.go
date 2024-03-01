@@ -1,6 +1,7 @@
 package router
 
 import (
+	"echo-test/db"
 	"echo-test/handlers"
 	"echo-test/services"
 
@@ -18,10 +19,11 @@ func Init(
 	questionService services.IQuestionService,
 	answerService services.IAnswerService,
 	db *pgxpool.Pool,
+	queries *db.Queries,
 ) {
 	authorHandler := handlers.NewAuthor(logger, authorService)
 	testHandler := handlers.NewTestHandler(logger, testService, userService)
-	questionHandler := handlers.NewQuestionHandler(logger, questionService, answerService, db)
+	questionHandler := handlers.NewQuestionHandler(logger, questionService, answerService, db, queries)
 	authorHandler.Serve(e)
 	testHandler.Serve(e)
 	questionHandler.Serve(e)

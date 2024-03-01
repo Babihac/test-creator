@@ -81,7 +81,6 @@ func (a *AuthorHandler) get(c echo.Context) error {
 }
 
 func (a *AuthorHandler) authorDetail(c echo.Context) error {
-	fmt.Println(c.Request().Header)
 
 	id := c.Param("id")
 	num, err := strconv.ParseInt(id, 10, 64)

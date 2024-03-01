@@ -4,36 +4,34 @@ import "echo-test/components"
 
 type FormBodyProps struct {
 	QuestionTypes []components.SelectValues
-	Errors        map[string]string
 }
 
 templ FormBody(props FormBodyProps) {
 	<div id="new-question" class="flex flex-col gap-3">
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mt-6">
 			<div class="col-span-1">
-				@components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", ID: "question-name-input", Required: true, Error: props.Errors["QuestionName"]})
+				@components.TextInput(components.TextInputProps{Name: "question-name", Placeholder: "Question name", Label: "Question name", ID: "question-name-input", Required: true, InputAttrs: templ.Attributes{"data-create-question-target": "questionNameInput"}})
 			</div>
 			<div class="col-span-1">
-				@components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", ID: "question-type-input", Values: props.QuestionTypes})
+				@components.SelectInput(components.SelectInputProps{Name: "question-type", Label: "Question type", ID: "question-type-input", Values: props.QuestionTypes, InputAttrs: templ.Attributes{"data-create-question-target": "questionTypeInput"}})
 			</div>
 			<div class="col-span-1">
-				@components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", ID: "question-points-input", Required: true, Min: "0", Error: props.Errors["QuestionPoints"]})
+				@components.NumberInput(components.NumberInputProps{Name: "question-points", Placeholder: "Points", Label: "Points for question", ID: "question-points-input", Required: true, Min: "0", InputAttrs: templ.Attributes{"data-create-question-target": "questionPointsInput"}})
 			</div>
 			<div class="col-span-1 lg:col-span-3">
-				@components.TextArea(components.TextAreaProps{Name: "question-text", Placeholder: "Formulate your question.", Label: "Question text", Model: "questionText", ID: "question-text-input", Required: true, Error: props.Errors["QuestionText"]})
+				@components.TextArea(components.TextAreaProps{Name: "question-text", Placeholder: "Formulate your question.", Label: "Question text", ID: "question-text-input", Required: true, InputAttrs: templ.Attributes{"data-create-question-target": "questionTextInput"}})
 			</div>
 		</div>
 		<div class="divider w-full"></div>
 		<div class="prose flex align-baseline gap-3">
 			<h2>Answers Definition</h2>
-			<button @click="addAnswer" class="btn btn-outline btn-sm btn-success" type="button">New</button>
+			<input name="questions-count" type="hidden" data-create-question-target="questionsCountInput" value={ "0" }/>
+			<button hx-get="/question/add-answer" hx-target="#answer-list" hx-include="[name='questions-count']" hx-swap="beforeend" class="btn btn-outline btn-sm btn-success" type="button">New</button>
 		</div>
-		<template id="answers-definition-list" x-for="(answer, index) in answers" :key="answer.id">
-			@AnswerDefinitionRow()
-		</template>
+		<div id="answer-list" data-create-question-target="answerList"></div>
 		<div class="divider w-full"></div>
-		<div class="ml-auto">
-			<button hx-post="/question" hx-target="#new-question" hx-swap="outerHTML" hx-target class="btn btn-primary">Create Question</button>
+		<div class="ml-auto mb-3">
+			<button hx-post="/question" hx-swap="none" class="btn btn-primary">Create Question</button>
 		</div>
 	</div>
 }

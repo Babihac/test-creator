@@ -24,15 +24,17 @@ type QuestionHandler struct {
 	answerService        services.IAnswerService
 	createQuestionHelper *helpers.CreateQuestionHelper
 	db                   *pgxpool.Pool
+	queries              *db.Queries
 }
 
-func NewQuestionHandler(logger *zerolog.Logger, questionService services.IQuestionService, answerService services.IAnswerService, db *pgxpool.Pool) *QuestionHandler {
+func NewQuestionHandler(logger *zerolog.Logger, questionService services.IQuestionService, answerService services.IAnswerService, db *pgxpool.Pool, queries *db.Queries) *QuestionHandler {
 	return &QuestionHandler{
 		logger:               logger,
 		questionService:      questionService,
 		createQuestionHelper: helpers.NewCreateQuestionHelper(questionService),
 		answerService:        answerService,
 		db:                   db,
+		queries:              queries,
 	}
 }
 
@@ -99,50 +101,65 @@ func (q *QuestionHandler) new(c echo.Context) error {
 }
 
 func (q *QuestionHandler) addAnswer(c echo.Context) error {
-	return questionComponents.AnswerDefinitionRow().Render(c.Request().Context(), c.Response().Writer)
-}
+	index := c.QueryParam("questions-count")
 
-func (q *QuestionHandler) createQuestion(c echo.Context) error {
-	quetionBody, errorsMap, err := q.createQuestionHelper.ValidateQuestion(c)
+	num, err := strconv.ParseInt(index, 10, 32)
 
 	if err != nil {
 		return utils.SendServerErrorNotification(c)
 	}
 
-	if errorsMap != nil {
-		return q.createQuestionHelper.PrepareQuestionForm(c, *errorsMap)
+	return questionComponents.AnswerDefinitionRow(num).Render(c.Request().Context(), c.Response().Writer)
+}
+
+func (q *QuestionHandler) createQuestion(c echo.Context) error {
+	quetionBody, errorsMap, ok, err := q.createQuestionHelper.ValidateQuestion(c)
+
+	if err != nil {
+		return utils.SendServerErrorNotification(c)
 	}
 
-	fmt.Println(quetionBody)
+	if !ok {
+		return components.InputErrors(components.InputErrorsProps{Errors: *errorsMap}).Render(c.Request().Context(), c.Response().Writer)
+	}
 
-	question, err := q.questionService.Create(c, db.CreateQuestionParams{
+	tx, err := q.db.Begin(c.Request().Context())
+	defer tx.Rollback(c.Request().Context())
+
+	if err != nil {
+		return utils.SendServerErrorNotification(c)
+	}
+
+	qtx := q.queries.WithTx(tx)
+
+	question, err := q.questionService.CreateTx(c, db.CreateQuestionParams{
 		QuestionType: utils.StringToUUID(quetionBody.QuestionType),
 		Points:       int32(quetionBody.QuestionPoints),
 		Name:         quetionBody.QuestionName,
 		QuestionText: quetionBody.QuestionText,
-	})
+	}, qtx)
+
+	if err != nil {
+		return utils.SendServerErrorNotification(c)
+	}
 
 	for i, answerText := range quetionBody.AnswerTexts {
 		correct, _ := strconv.ParseBool(quetionBody.AnswerCorrects[i]) // already validated
 
-		//tx, err := q.db.Begin(c.Request().Context())
-
-		answer, err := q.answerService.Create(c, db.CreateAnswerParams{
+		_, err := q.answerService.CreateTx(c, db.CreateAnswerParams{
 			Value:      answerText,
 			Correct:    correct,
 			QuestionID: question.ID,
-		})
+		}, qtx)
 
 		if err != nil {
 			return utils.SendServerErrorNotification(c)
 		}
 
-		fmt.Printf("New answer: %v", answer)
 	}
 
-	if err != nil {
-		return utils.SendServerErrorNotification(c)
-	}
+	tx.Commit(c.Request().Context())
+
 	uuid, _ := utils.ParseUUID(question.ID)
 
 	redirectParams := utils.NewDefaultRedirectParams(utils.DefaultRedirectHeaders{Url: fmt.Sprintf("/question/%s", uuid), Swap: "OuterHTML", Target: "#create-question-component"},

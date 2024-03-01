@@ -1,27 +1,27 @@
 package questionComponents
 
 import "echo-test/components"
+import "fmt"
 
 type AnswerDefinitionRowProps struct {
-	AnswerText string
-	IsCorrect  bool
+	Index int64
 }
 
-templ AnswerDefinitionRow() {
-	<div class="flex items-center gap-4 flex-wrap">
+templ AnswerDefinitionRow(id int64) {
+	<div data-create-question-target="questionAnswer" class="flex answer-row items-center gap-4 flex-wrap">
 		<div class="lg:min-w-[350px]">
 			<label class="form-control w-full max-w-sm">
 				<div class="label">
 					<span class="label-text font-bold">Answer</span>
-					<span x-show="answer.answerText===''" class="label-text-alt text-red-500">Please, fill in this field</span>
+					<span id={ fmt.Sprintf("error-answer-text-%d", id) }></span>
 				</div>
 				<div class="flex input input-bordered items-center">
 					<input
+						data-create-question-target="answerTextInput"
 						name="answer[text]"
 						type="text"
 						placeholder="Enter answer"
 						class="grow bg-transparent %s"
-						x-model="answer.answerText"
 					/>
 					<span class="badge badge-warning">Required</span>
 				</div>
@@ -31,13 +31,14 @@ templ AnswerDefinitionRow() {
 		<div class="pt-5 flex items-center">
 			@components.Toggle(
 				components.ToggleProps{
-					Label: "Correct answer",
-					Name:  "answer[correct]",
-					Model: "answer.isCorrect",
+					Label:           "Correct answer",
+					Name:            "answer[correct]",
+					InputAttributes: templ.Attributes{"data-action": "create-question#toggleCorrectAnswer", "data-create-question-target": "answerCorrectInput"},
+					Checked:         true,
 				})
 			<div
-				@click="removeAnswer(index)"
 				class="btn btn-circle btn-error bg-delete bg-no-repeat bg-center btn-xs"
+				data-action="click->create-question#removeAnswerDefinition"
 			></div>
 		</div>
 		<div class="divider w-full lg:hidden"></div>

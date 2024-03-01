@@ -13,11 +13,12 @@ import "bytes"
 import "fmt"
 
 type ToggleProps struct {
-	Label    string
-	Checked  bool
-	Disabled bool
-	Name     string
-	Model    string
+	Label           string
+	Checked         bool
+	Disabled        bool
+	Name            string
+	Model           string
+	InputAttributes templ.Attributes
 }
 
 func Toggle(props ToggleProps) templ.Component {
@@ -33,20 +34,28 @@ func Toggle(props ToggleProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"form-control w-52\"><label class=\"cursor-pointer label justify-start gap-4 font-bold\"><span x-text=\"answer.isCorrect? &#39;Correct answer&#39; : &#39;Incorrect answer&#39;\" class=\"label-text\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"form-control w-52\"><label class=\"cursor-pointer label justify-start gap-4 font-bold\"><span class=\"label-text toggle-label\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(props.Label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/toggle.templ`, Line: 15, Col: 106}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `components/toggle.templ`, Line: 16, Col: 54}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <input name=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <input type=\"hidden\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(fmt.Sprintf("%t", props.Checked)))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" name=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -54,7 +63,15 @@ func Toggle(props ToggleProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" type=\"hidden\" name=\"answer[index]\" x-model.fill=\"answer.isCorrect\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <input")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, props.InputAttributes)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" type=\"checkbox\" class=\"toggle toggle-succes checked:bg-success hover:checked:bg-success  checked:border-success bg-error border-error hover:bg-error\" checked=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -62,7 +79,7 @@ func Toggle(props ToggleProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"> <input type=\"checkbox\" class=\"toggle toggle-succes checked:bg-success hover:checked:bg-success  checked:border-success bg-error border-error hover:bg-error\" checked=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -70,25 +87,7 @@ func Toggle(props ToggleProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		if props.Model != "" {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" x-model.fill=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(props.Model))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("></label></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></label></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -1,5 +1,7 @@
 package components
 
+import "fmt"
+
 type TextAreaProps struct {
 	Placeholder string
 	Value       string
@@ -12,20 +14,24 @@ type TextAreaProps struct {
 	Required    bool
 	Model       string
 	OOB         bool
+	InputAttrs  templ.Attributes
 }
 
 templ TextArea(props TextAreaProps) {
 	<label class="form-control" id={ props.ID }>
 		<div class="label">
 			<span class="label-text font-bold">{ props.Label }</span>
+			if props.Error != "" {
+				<span class="label-text-alt text-red-500">{ props.Error }</span>
+			} else {
+				<span id={ fmt.Sprintf("error-%s", props.Name) }></span>
+			}
 			if props.Required {
 				<span class="badge badge-warning">Required</span>
 			}
-			if props.Error != "" {
-				<span class="label-text-alt text-red-500">{ props.Error }</span>
-			}
 		</div>
 		<textarea
+			{ props.InputAttrs... }
 			name={ props.Name }
 			class="textarea textarea-bordered h-24"
 			placeholder={ props.Placeholder }

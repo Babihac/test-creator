@@ -132,7 +132,6 @@ func (t *TestHandler) createTest(c echo.Context) error {
 	values, ok, err := t.createTestHelper.ValidateForm(c)
 
 	if !ok || err != nil {
-		fmt.Printf("%t, %v\n", ok, err)
 		c.Response().Header().Add("HX-Reswap", "none")
 		return components.Notification("end", "top", "alert-error", "Something went wrong").Render(c.Request().Context(), c.Response().Writer)
 	}

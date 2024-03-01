@@ -35,3 +35,7 @@ func (q *QuestionService) GetQuestionTypesSuggestions(ctx echo.Context) ([]db.Ge
 func (q *QuestionService) Create(ctx echo.Context, params db.CreateQuestionParams) (db.Question, error) {
 	return q.queries.CreateQuestion(ctx.Request().Context(), params)
 }
+
+func (q *QuestionService) CreateTx(ctx echo.Context, params db.CreateQuestionParams, trx *db.Queries) (db.Question, error) {
+	return trx.CreateQuestion(ctx.Request().Context(), params)
+}
