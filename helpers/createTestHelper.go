@@ -8,7 +8,7 @@ import (
 	"echo-test/errors"
 	"echo-test/services"
 	"echo-test/types"
-	"net/http"
+	"echo-test/utils"
 
 	"github.com/labstack/echo/v4"
 )
@@ -43,16 +43,18 @@ func (s *StepTwoForm) LteFieldError(fieldName string) string {
 }
 
 type CreateTestHelper struct {
-	testService services.ITestService
-	userService services.IUserService
-	steps       []string
+	testService     services.ITestService
+	userService     services.IUserService
+	questionService services.IQuestionService
+	steps           []string
 }
 
-func NewCreateTestHelper(ts services.ITestService, us services.IUserService) *CreateTestHelper {
+func NewCreateTestHelper(ts services.ITestService, us services.IUserService, qs services.IQuestionService) *CreateTestHelper {
 	return &CreateTestHelper{
-		testService: ts,
-		userService: us,
-		steps:       []string{"Main info", "Scoring requirements", "Questin definition", "Summary"},
+		testService:     ts,
+		userService:     us,
+		questionService: qs,
+		steps:           []string{"Main info", "Scoring", "Questions", "Summary"},
 	}
 }
 
@@ -61,7 +63,7 @@ func (h *CreateTestHelper) PrepareStepOne(c echo.Context, errorsMap map[string]s
 	userSuggestions, err := h.userService.GetUserSuggestions(c)
 
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Something went wrong")
+		return utils.SendServerErrorNotification(c)
 	}
 
 	for _, useruserSuggestion := range userSuggestions {
@@ -94,7 +96,25 @@ func (h *CreateTestHelper) PrepareStepTwo(c echo.Context, errorsMap map[string]s
 }
 
 func (h *CreateTestHelper) PrepareStepThree(c echo.Context, errorsMap map[string]string) error {
-	panic("haha")
+
+	questions, err := h.questionService.GetQuestionSuggestions(c)
+
+	if err != nil {
+		return utils.SendServerErrorNotification(c)
+	}
+
+	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-3")
+	testComponents.StepQuestions(errorsMap, questions).Render(c.Request().Context(), c.Response().Writer)
+	testComponents.Stepper(testComponents.StepperProps{CurrentStep: 3, Steps: h.steps, Oob: true}).Render(c.Request().Context(), c.Response().Writer)
+	return nil
+}
+
+func (h *CreateTestHelper) PrepareStepFour(c echo.Context) error {
+	c.Response().Header().Add("HX-Retarget", "#create-test-form-step-4")
+	testComponents.StepSummary().Render(c.Request().Context(), c.Response().Writer)
+	testComponents.Stepper(testComponents.StepperProps{CurrentStep: 4, Steps: h.steps, Oob: true}).Render(c.Request().Context(), c.Response().Writer)
+
+	return nil
 }
 
 func (h *CreateTestHelper) ValidateStepOne(c echo.Context) (bool, *map[string]string, error) {

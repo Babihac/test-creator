@@ -23,15 +23,17 @@ type TestHandler struct {
 	logger           *zerolog.Logger
 	testService      services.ITestService
 	userService      services.IUserService
+	questionService  services.IQuestionService
 	createTestHelper *helpers.CreateTestHelper
 }
 
-func NewTestHandler(logger *zerolog.Logger, testService services.ITestService, userService services.IUserService) *TestHandler {
+func NewTestHandler(logger *zerolog.Logger, testService services.ITestService, userService services.IUserService, questionService services.IQuestionService) *TestHandler {
 	return &TestHandler{
 		logger:           logger,
 		testService:      testService,
 		userService:      userService,
-		createTestHelper: helpers.NewCreateTestHelper(testService, userService),
+		questionService:  questionService,
+		createTestHelper: helpers.NewCreateTestHelper(testService, userService, questionService),
 	}
 }
 
@@ -54,7 +56,7 @@ func (t *TestHandler) Serve(echo *echo.Echo) {
 	group.POST("/new/step1", t.createTestStepOne)
 	group.POST("/new/step2", t.createTestStepTwo)
 	group.POST("/new/step3", t.createTestStepThree)
-	group.POST("/new/step4", t.new)
+	group.POST("/new/step4", t.createTestStepFour)
 
 }
 
@@ -203,5 +205,11 @@ func (t *TestHandler) createTestStepThree(c echo.Context) error {
 		return t.createTestHelper.InputErrors(c, *errorsMap)
 	}
 
+	c.Response().Header().Add("HX-Push-Url", "/test/new/step3")
 	return t.createTestHelper.PrepareStepThree(c, map[string]string{})
+}
+
+func (t *TestHandler) createTestStepFour(c echo.Context) error {
+	c.Response().Header().Add("HX-Push-Url", "/test/new/step4")
+	return t.createTestHelper.PrepareStepFour(c)
 }

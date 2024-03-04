@@ -9,8 +9,9 @@ declare global {
   }
 }
 
-window.Stimulus = Application.start();
-
-window.Stimulus.register("toggle-theme", ToggleThemeController);
-window.Stimulus.register("create-test", CreateTestController);
-window.Stimulus.register("create-question", CreateQuestion);
+if (!window.Stimulus) {
+  window.Stimulus = Application.start();
+  window.Stimulus.register("toggle-theme", ToggleThemeController);
+  window.Stimulus.register("create-test", CreateTestController);
+  window.Stimulus.register("create-question", CreateQuestion);
+}

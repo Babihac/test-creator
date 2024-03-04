@@ -34,6 +34,7 @@ type IUserService interface {
 
 type IQuestionService interface {
 	Get(ctx echo.Context) ([]db.Question, error)
+	GetQuestionSuggestions(ctx echo.Context) ([]db.ListQuestionsWithTypeRow, error)
 	GetQuestionTypesSuggestions(ctx echo.Context) ([]db.GetQuestionTypeSuggestionsRow, error)
 	Create(ctx echo.Context, params db.CreateQuestionParams) (db.Question, error)
 	CreateTx(ctx echo.Context, params db.CreateQuestionParams, trx *db.Queries) (db.Question, error)

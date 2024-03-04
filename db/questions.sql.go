@@ -137,6 +137,43 @@ func (q *Queries) ListQuestionsByQuestionType(ctx context.Context, questionType 
 	return items, nil
 }
 
+const listQuestionsWithType = `-- name: ListQuestionsWithType :many
+SELECT q.id::text as "id", q.name, q.points, qt.type as question_type FROM question q
+JOIN question_type qt ON q.question_type = qt.id
+`
+
+type ListQuestionsWithTypeRow struct {
+	ID           string
+	Name         string
+	Points       int32
+	QuestionType string
+}
+
+func (q *Queries) ListQuestionsWithType(ctx context.Context) ([]ListQuestionsWithTypeRow, error) {
+	rows, err := q.db.Query(ctx, listQuestionsWithType)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListQuestionsWithTypeRow
+	for rows.Next() {
+		var i ListQuestionsWithTypeRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Points,
+			&i.QuestionType,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updateQuestion = `-- name: UpdateQuestion :one
 UPDATE question SET 
   question_type = $1, points = $2, name = $3

@@ -15,7 +15,7 @@ templ Base() {
 			<script defer src="/js/htmx.js">
 			</script>
 		</head>
-		<body data-controller="toggle-theme" class="flex flex-col min-h-[100vh] min-w-[100vw]" data-action="click->toggleTheme#toggle">
+		<body data-controller="toggle-theme" class="flex flex-col min-h-[100vh] min-w-[100vw]" data-action="click->toggleTheme#toggle" data-toggle-connected="false">
 			<div id="react-header"></div>
 			<div id="react-content"></div>
 			<div class="hidden" id="notification"></div>

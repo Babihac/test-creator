@@ -18,12 +18,22 @@ export default class extends Controller {
 
   initialize(): void {
     console.log("Initialize toggle theme");
+    const toggleConnected = document.body.dataset.toggleConnected;
+
+    if (toggleConnected === "true") {
+      console.log("Toggle theme already connected");
+      this.disconnect();
+      return;
+    }
+
     document.documentElement.setAttribute("data-theme", this.themeValue);
     const iconClass = this.themeValue === "light" ? "bg-sun" : "bg-moon";
 
     this.toggleThemeTargets.forEach((target) => {
       target.classList.add(iconClass);
     });
+
+    document.body.dataset.toggleConnected = "true";
   }
 
   toggle(event: Event): void {

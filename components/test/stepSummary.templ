@@ -1,0 +1,58 @@
+package testComponents
+
+templ StepSummary() {
+	<div class="flex flex-col justify-between flex-1 h-full" data-create-test-target="stepFour">
+		<div class="flex-1">
+			<div>
+				<div class="px-4 sm:px-0">
+					<h3 class="text-base font-semibold leading-7">Test Information</h3>
+					<p class="mt-1 max-w-2xl text-sm leading-6 text-neutral-500">Test with these attributes will be created</p>
+				</div>
+				<div class="mt-6 border-t border-neutral-100">
+					<dl class="divide-y divide-neutral-100">
+						<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt class="text-sm font-medium leading-6">Test name</dt>
+							<dd data-create-test-target="summaryTestName" class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0"></dd>
+						</div>
+						<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt class="text-sm font-medium leading-6">Test duration</dt>
+							<dd data-create-test-target="summaryTestDuration" class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0"></dd>
+						</div>
+						<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt class="text-sm font-medium leading-6">Supervising teacher</dt>
+							<dd data-create-test-target="summaryTeacher" class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0"></dd>
+						</div>
+						<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt class="text-sm font-medium leading-6">Maximum points</dt>
+							<dd data-create-test-target="summaryMaxPoints" class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0"></dd>
+						</div>
+						<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt class="text-sm font-medium leading-6">Minimal required points</dt>
+							<dd data-create-test-target="summaryMinPoints" class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0"></dd>
+						</div>
+						<div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+							<dt class="text-sm font-medium leading-6">Questions</dt>
+							<dd class="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0">
+								<div class="overflow-x-auto">
+									<table class="table table-x">
+										<thead>
+											<tr class="border-neutral-100">
+												<th>Name</th>
+												<th>Points</th>
+											</tr>
+										</thead>
+										<tbody data-create-test-target="summaryQuestions"></tbody>
+									</table>
+								</div>
+							</dd>
+						</div>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class=" mt-auto mb-4 flex justify-between">
+			<button hx-post="/test/new/step3" hx-target="#create-test-form-step-3" type="button" class="btn btn-primary self-end">Previous Step</button>
+			<button hx-post="/test/new/step4" hx-target="#create-test-form-step-4" type="button" class="btn btn-primary self-end">Create Test</button>
+		</div>
+	</div>
+}

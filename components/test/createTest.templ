@@ -11,7 +11,7 @@ templ CreateTest(props  CreateTestProps) {
 		</div>
 		<div class="flex flex-1 mb-7 form-shadow px-4 rounded-lg flex-col lg:flex-row">
 			@Stepper(StepperProps{
-				Steps:       []string{"Main info", "Scoring requirements", "Questin definition", "Summary"},
+				Steps:       []string{"Main info", "Scoring", "Questions", "Summary"},
 				CurrentStep: 1,
 			})
 			<div class="divider divider-horizontal"></div>
@@ -24,8 +24,8 @@ templ CreateTest(props  CreateTestProps) {
 						@CreateTestStepOne(CreateTestStepOneProps{})
 					</div>
 					<div class="h-full" id="create-test-form-step-2" data-create-test-target="step"></div>
-					<div id="create-test-form-step-3" data-create-test-target="step"></div>
-					<div id="create-test-form-step-4" data-create-test-target="step"></div>
+					<div class="h-full" id="create-test-form-step-3" data-create-test-target="step"></div>
+					<div class="h-full" id="create-test-form-step-4" data-create-test-target="step"></div>
 				</form>
 			</div>
 		</div>

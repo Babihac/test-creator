@@ -32,7 +32,7 @@ func CreateTest(props CreateTestProps) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = Stepper(StepperProps{
-			Steps:       []string{"Main info", "Scoring requirements", "Questin definition", "Summary"},
+			Steps:       []string{"Main info", "Scoring", "Questions", "Summary"},
 			CurrentStep: 1,
 		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -46,7 +46,7 @@ func CreateTest(props CreateTestProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"h-full\" id=\"create-test-form-step-2\" data-create-test-target=\"step\"></div><div id=\"create-test-form-step-3\" data-create-test-target=\"step\"></div><div id=\"create-test-form-step-4\" data-create-test-target=\"step\"></div></form></div></div></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"h-full\" id=\"create-test-form-step-2\" data-create-test-target=\"step\"></div><div class=\"h-full\" id=\"create-test-form-step-3\" data-create-test-target=\"step\"></div><div class=\"h-full\" id=\"create-test-form-step-4\" data-create-test-target=\"step\"></div></form></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

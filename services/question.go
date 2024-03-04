@@ -39,3 +39,7 @@ func (q *QuestionService) Create(ctx echo.Context, params db.CreateQuestionParam
 func (q *QuestionService) CreateTx(ctx echo.Context, params db.CreateQuestionParams, trx *db.Queries) (db.Question, error) {
 	return trx.CreateQuestion(ctx.Request().Context(), params)
 }
+
+func (q *QuestionService) GetQuestionSuggestions(ctx echo.Context) ([]db.ListQuestionsWithTypeRow, error) {
+	return q.queries.ListQuestionsWithType(ctx.Request().Context())
+}

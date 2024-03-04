@@ -22,7 +22,7 @@ func Init(
 	queries *db.Queries,
 ) {
 	authorHandler := handlers.NewAuthor(logger, authorService)
-	testHandler := handlers.NewTestHandler(logger, testService, userService)
+	testHandler := handlers.NewTestHandler(logger, testService, userService, questionService)
 	questionHandler := handlers.NewQuestionHandler(logger, questionService, answerService, db, queries)
 	authorHandler.Serve(e)
 	testHandler.Serve(e)
